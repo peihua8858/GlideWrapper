@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆形变换" />
+
+        <Button
+            android:id="@+id/btn_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旋转变换" />
+
+        <Button
+            android:id="@+id/btn_gray_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="灰度变换" />
+
+        <Button
+            android:id="@+id/btn_blur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高斯模糊" />
+
+        <Button
+            android:id="@+id/btn_color_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="颜色滤镜" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

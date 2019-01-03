@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GlideImageView">
+        <!--加载中-->
+        <attr name="giv_placeholder" format="reference" />
+        <!--加载失败-->
+        <attr name="giv_error" format="reference" />
+        <!--圆角半径-->
+        <attr name="giv_roundedRadius" format="dimension|reference" />
+        <!--圆角边距-->
+        <attr name="giv_roundedMargin" format="dimension|reference" />
+        <!--灰度处理-->
+        <attr name="giv_grayScale" format="boolean" />
+        <!--高斯模糊-->
+        <attr name="giv_isBlur" format="boolean" />
+        <!--圆形-->
+        <attr name="giv_isCropCircle" format="boolean" />
+        <!--转角-->
+        <attr name="giv_rotateDegree" format="integer" />
+        <!--动画-->
+        <attr name="giv_useAnimationPool" format="boolean" />
+        <!--目标宽度-->
+        <attr name="giv_width" format="dimension|reference" />
+        <!--目标高度-->
+        <attr name="giv_height" format="dimension|reference" />
+        <!--过滤颜色-->
+        <attr name="giv_ColorFilter" format="color|reference" />
+    </declare-styleable>
+</resources>
