@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnRotate.setOnClickListener(this);
         Button btnBlur = findViewById(R.id.btn_blur);
         btnBlur.setOnClickListener(this);
-        Button btnColorFilter = findViewById(R.id.btn_color_filter);
-        btnColorFilter.setOnClickListener(this);
         Button btnGrayScale = findViewById(R.id.btn_gray_scale);
         btnGrayScale.setOnClickListener(this);
     }
@@ -44,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_blur:
                 startActivity(new Intent(this, BlurActivity.class));
-                break;
-            case R.id.btn_color_filter:
-                startActivity(new Intent(this, ColorFilterActivity.class));
                 break;
             case R.id.btn_gray_scale:
                 startActivity(new Intent(this, GrayScaleActivity.class));

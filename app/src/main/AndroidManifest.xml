@@ -24,7 +24,6 @@
         </activity>
         <activity android:name=".activity.CropCircleActivity" />
         <activity android:name=".activity.RotateActivity" />
-        <activity android:name=".activity.ColorFilterActivity" />
         <activity android:name=".activity.BlurActivity" />
         <activity android:name=".activity.GrayScaleActivity" />
     </application>
