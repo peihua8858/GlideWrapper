@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
-def buildType = "SNAPSHOT"/*"release"*/
+def buildType = /*"SNAPSHOT"*/"release"
 def mavenUrl = "http://10.32.2.200:8081/repository/globalegrow/"
 def mavenUrlSnapshot = "http://10.32.2.200:8081/repository/globalegrow-snapshot/"
 def mavenUserName = "longxl"

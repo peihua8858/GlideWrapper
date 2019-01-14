@@ -22,6 +22,13 @@ import android.util.Log;
 import java.io.File;
 import java.net.URL;
 
+/**
+ * uri处理工具类
+ *
+ * @author dingpeihua
+ * @version 1.0
+ * @date 2019/1/14 09:20
+ */
 public class UriUtil {
 
     /**
