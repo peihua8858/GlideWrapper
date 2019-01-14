@@ -67,17 +67,17 @@ public class RatioImageView extends AppCompatImageView {
 
     protected void inflate(Context context, @Nullable AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView);
-        placeholderDrawable = a.getDrawable(R.styleable.RatioImageView_giv_placeholder);
-        errorDrawable = a.getDrawable(R.styleable.RatioImageView_giv_error);
-        roundedRadius = a.getDimensionPixelSize(R.styleable.RatioImageView_giv_roundedRadius, 0);
-        roundedMargin = a.getDimensionPixelSize(R.styleable.RatioImageView_giv_roundedMargin, 0);
-        isGrayScale = a.getBoolean(R.styleable.RatioImageView_giv_grayScale, false);
-        isCropCircle = a.getBoolean(R.styleable.RatioImageView_giv_isCropCircle, false);
-        isBlur = a.getBoolean(R.styleable.RatioImageView_giv_isBlur, false);
-        rotateDegree = a.getInteger(R.styleable.RatioImageView_giv_rotateDegree, 0);
-        useAnimationPool = a.getBoolean(R.styleable.RatioImageView_giv_useAnimationPool, false);
-        width = a.getDimensionPixelSize(R.styleable.RatioImageView_giv_width, 0);
-        height = a.getDimensionPixelSize(R.styleable.RatioImageView_giv_height, 0);
+        placeholderDrawable = a.getDrawable(R.styleable.RatioImageView_riv_placeholder);
+        errorDrawable = a.getDrawable(R.styleable.RatioImageView_riv_error);
+        roundedRadius = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedRadius, 0);
+        roundedMargin = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedMargin, 0);
+        isGrayScale = a.getBoolean(R.styleable.RatioImageView_riv_grayScale, false);
+        isCropCircle = a.getBoolean(R.styleable.RatioImageView_riv_isCropCircle, false);
+        isBlur = a.getBoolean(R.styleable.RatioImageView_riv_isBlur, false);
+        rotateDegree = a.getInteger(R.styleable.RatioImageView_riv_rotateDegree, 0);
+        useAnimationPool = a.getBoolean(R.styleable.RatioImageView_riv_useAnimationPool, false);
+        width = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_width, 0);
+        height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
         a.recycle();
     }
 
