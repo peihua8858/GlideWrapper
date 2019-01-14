@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="GlideImageView">
+    <declare-styleable name="RatioImageView">
         <!--加载中-->
         <attr name="giv_placeholder" format="reference" />
         <!--加载失败-->
