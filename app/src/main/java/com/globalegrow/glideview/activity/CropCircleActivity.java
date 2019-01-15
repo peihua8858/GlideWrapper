@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.globalegrow.glideview.Constants;
 import com.globalegrow.glideview.R;
-import com.fz.imageload.widget.GlideImageView;
+import com.fz.imageloader.widget.RatioImageView;
 
 /**
  * 圆形变换
@@ -21,9 +21,9 @@ public class CropCircleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_circle);
-        GlideImageView imageView1 = findViewById(R.id.giv_image_1);
+        RatioImageView imageView1 = findViewById(R.id.giv_image_1);
         imageView1.setImageUrl(Constants.urls[0],550,550);
-        GlideImageView imageView2 = findViewById(R.id.giv_image_2);
+        RatioImageView imageView2 = findViewById(R.id.giv_image_2);
         imageView2.setImageUrl(Constants.urls[0]);
     }
 }

@@ -1,4 +1,4 @@
-package com.fz.imageload.glide;
+package com.fz.imageloader.glide;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,7 +27,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.fz.imageload.utils.UriUtil;
+import com.fz.imageloader.utils.UriUtil;
 
 import java.io.File;
 

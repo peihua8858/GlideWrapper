@@ -1,4 +1,4 @@
-package com.fz.imageload.widget;
+package com.fz.imageloader.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,10 +12,10 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.request.RequestOptions;
-import com.fz.imageload.R;
-import com.fz.imageload.glide.ImageLoader;
-import com.fz.imageload.glide.LoaderListener;
-import com.fz.imageload.glide.RoundedCornersTransformation;
+import com.fz.imageloader.R;
+import com.fz.imageloader.glide.ImageLoader;
+import com.fz.imageloader.glide.LoaderListener;
+import com.fz.imageloader.glide.RoundedCornersTransformation;
 
 /**
  * 封装glide图片加载处理及变换，但由于glide限制不支持多种变换组合。

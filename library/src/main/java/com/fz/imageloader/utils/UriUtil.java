@@ -1,4 +1,4 @@
-package com.fz.imageload.utils;
+package com.fz.imageloader.utils;
 
 /*
  * Copyright (c) 2015-present, Facebook, Inc.

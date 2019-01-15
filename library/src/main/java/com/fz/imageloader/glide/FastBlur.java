@@ -1,4 +1,4 @@
-package com.fz.imageload.glide;
+package com.fz.imageloader.glide;
 
 import android.graphics.Bitmap;
 

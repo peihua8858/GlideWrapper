@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.fz.imageloader.widget.RatioImageView;
 import com.globalegrow.glideview.Constants;
 import com.globalegrow.glideview.R;
-import com.fz.imageload.widget.GlideImageView;
 
 /**
  * 旋转变换
@@ -20,11 +20,11 @@ public class RotateActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotate);
-        GlideImageView imageView1 = findViewById(R.id.giv_image_1);
+        RatioImageView imageView1 = findViewById(R.id.giv_image_1);
         imageView1.setImageUrl(Constants.urls[0]);
-        GlideImageView imageView2 = findViewById(R.id.giv_image_2);
+        RatioImageView imageView2 = findViewById(R.id.giv_image_2);
         imageView2.setImageUrl(Constants.urls[0]);
-        GlideImageView imageView3 = findViewById(R.id.giv_image_3);
+        RatioImageView imageView3 = findViewById(R.id.giv_image_3);
         imageView3.setImageUrl(Constants.urls[0]);
     }
 }

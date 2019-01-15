@@ -11,7 +11,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.fz.imageload.widget.GlideImageView
+        <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:giv_placeholder="@drawable/ic_android_placehold"
             app:giv_width="50dp" />
 
-        <com.fz.imageload.widget.GlideImageView
+        <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
