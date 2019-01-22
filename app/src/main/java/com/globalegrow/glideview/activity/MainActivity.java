@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnBlur.setOnClickListener(this);
         Button btnGrayScale = findViewById(R.id.btn_gray_scale);
         btnGrayScale.setOnClickListener(this);
+        Button btnGif = findViewById(R.id.btn_gif);
+        btnGif.setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_gray_scale:
                 startActivity(new Intent(this, GrayScaleActivity.class));
+                break;
+            case R.id.btn_gif:
+                startActivity(new Intent(this, GifActivity.class));
                 break;
             default:
                 break;

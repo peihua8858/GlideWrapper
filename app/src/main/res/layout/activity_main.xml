@@ -33,5 +33,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="高斯模糊" />
+        <Button
+            android:id="@+id/btn_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示gif" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
