@@ -30,25 +30,58 @@ import com.fz.imageloader.glide.RoundedCornersTransformation;
  * @date 2019/1/2 09:50
  */
 public class RatioImageView extends AppCompatImageView {
+    /**
+     * {@link RequestOptions#placeholderDrawable}
+     */
     private Drawable placeholderDrawable;
+    /**
+     * {@link RequestOptions#errorPlaceholder}
+     */
     private Drawable errorDrawable;
     /**
      * 圆角半径
      */
     private int roundedRadius;
+    /**
+     * 圆角边距
+     */
     private int roundedMargin;
     /**
      * 圆角位置
      */
     private RoundedCornersTransformation.CornerType cornerType;
+    /**
+     * 是否需要灰度处理
+     */
     private boolean isGrayScale;
+    /**
+     * 是否需要高斯模糊处理
+     */
     private boolean isBlur;
+    /**
+     * 旋转角度
+     */
     private int rotateDegree;
+    /**
+     * {@link RequestOptions#useAnimationPool}
+     */
     private boolean useAnimationPool;
+    /**
+     * 宽度和高度
+     */
     private int width, height;
+    /**
+     * {@link RequestOptions#sizeMultiplier}
+     */
     private float sizeMultiplier = 0f;
+    /**
+     * 是否是圆形
+     */
     private boolean isCropCircle;
-    private float ratio;
+    /**
+     * 宽度与高度的比值
+     */
+    private float aspectRatio = 0f;
     private LoaderListener<?> listener;
 
     public RatioImageView(Context context) {
@@ -78,6 +111,7 @@ public class RatioImageView extends AppCompatImageView {
         useAnimationPool = a.getBoolean(R.styleable.RatioImageView_riv_useAnimationPool, false);
         width = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_width, 0);
         height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
+        aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
         a.recycle();
     }
 
@@ -95,36 +129,40 @@ public class RatioImageView extends AppCompatImageView {
 
     /**
      * 设置宽高比
+     * 注意：由算法决定，必须是宽度与高度的比值
+     * 即:width/height
      *
      * @param ratio
      */
     public void setRatio(float ratio) {
-        this.ratio = ratio;
+        this.aspectRatio = ratio;
     }
 
 
     /**
      * 宽高比
+     * 注意：由算法决定，必须是宽度与高度的比值
+     * 即:width/height
      *
      * @param width
      * @param height
      */
     public void setRatio(float width, float height) {
         if (height == 0 || width == 0) {
-            ratio = -1;
+            aspectRatio = -1;
             return;
         }
-        ratio = width / height;
+        aspectRatio = width / height;
         requestLayout();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (ratio == 0.0) {
+        if (aspectRatio == 0.0) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        } else if (ratio > 0) {
+        } else if (aspectRatio > 0) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
-            int height = Math.round(width / ratio);
+            int height = Math.round(width / aspectRatio);
             try {
                 setMeasuredDimension(width, height);
             } catch (Exception e) {
@@ -333,6 +371,18 @@ public class RatioImageView extends AppCompatImageView {
 
     public void setCropCircle(boolean cropCircle) {
         isCropCircle = cropCircle;
+    }
+
+    public Drawable getPlaceholderDrawable() {
+        return placeholderDrawable;
+    }
+
+    public Drawable getErrorDrawable() {
+        return errorDrawable;
+    }
+
+    public float getRatio() {
+        return aspectRatio;
     }
 }
 
