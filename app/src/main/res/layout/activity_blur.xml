@@ -15,55 +15,54 @@
             android:id="@+id/giv_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="90dp"
-            app:giv_isCropCircle="true"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_width="90dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="90dp"
+            app:riv_isCropCircle="true"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_width="90dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="50dp"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_rotateDegree="90"
-            app:giv_width="50dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="50dp"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_rotateDegree="90"
+            app:riv_width="50dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_grayScale="true"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_grayScale="true"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_isBlur="true"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_isBlur="true"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_roundedMargin="3dp"
-            app:giv_roundedRadius="15dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_roundedMargin="3dp"
+            app:riv_roundedRadius="15dp" />
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
+            app:riv_error="@mipmap/ic_loading_fail"
             android:background="@color/colorAccent"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_ColorFilter="#35E579"
-            app:giv_roundedMargin="3dp"
-            app:giv_roundedRadius="15dp" />
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_roundedMargin="3dp"
+            app:riv_roundedRadius="15dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -12,32 +12,32 @@
         android:orientation="vertical">
 
         <com.fz.imageloader.widget.RatioImageView
-            android:id="@+id/giv_image_1"
+            android:id="@+id/riv_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="180dp"
-            app:giv_rotateDegree="90"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_width="180dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="180dp"
+            app:riv_rotateDegree="90"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_width="180dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="90dp"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_rotateDegree="180"
-            app:giv_width="90dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="90dp"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_rotateDegree="180"
+            app:riv_width="90dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_rotateDegree="270"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_rotateDegree="270"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -15,39 +15,39 @@
             android:id="@+id/giv_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_grayScale="true"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_grayScale="true"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_placeholder="@drawable/ic_android_placehold" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_roundedMargin="3dp"
-            app:giv_grayScale="true"
-            app:giv_roundedRadius="15dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_roundedMargin="3dp"
+            app:riv_grayScale="true"
+            app:riv_roundedRadius="15dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

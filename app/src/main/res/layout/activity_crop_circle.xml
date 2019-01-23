@@ -15,21 +15,21 @@
             android:id="@+id/giv_image_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="50dp"
-            app:giv_isCropCircle="true"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_width="50dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="50dp"
+            app:riv_isCropCircle="true"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_width="50dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/giv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:giv_error="@mipmap/ic_loading_fail"
-            app:giv_height="60dp"
-            app:giv_isCropCircle="true"
-            app:giv_placeholder="@drawable/ic_android_placehold"
-            app:giv_width="60dp" />
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="60dp"
+            app:riv_isCropCircle="true"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_width="60dp" />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
@@ -90,18 +91,16 @@ public class RatioImageView extends AppCompatImageView {
 
     public RatioImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        inflate(context, attrs);
+        inflate(context, attrs, 0);
     }
 
     public RatioImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        inflate(context, attrs);
+        inflate(context, attrs, defStyleAttr);
     }
 
-    protected void inflate(Context context, @Nullable AttributeSet attrs) {
+    protected void inflate(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView);
-        placeholderDrawable = a.getDrawable(R.styleable.RatioImageView_riv_placeholder);
-        errorDrawable = a.getDrawable(R.styleable.RatioImageView_riv_error);
         roundedRadius = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedRadius, 0);
         roundedMargin = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedMargin, 0);
         isGrayScale = a.getBoolean(R.styleable.RatioImageView_riv_grayScale, false);
@@ -112,7 +111,17 @@ public class RatioImageView extends AppCompatImageView {
         width = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_width, 0);
         height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
         aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
+
+        int placeholderId = a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1);
+        if (placeholderId != -1) {
+            placeholderDrawable = AppCompatResources.getDrawable(context, placeholderId);
+        }
+        int errorId = a.getResourceId(R.styleable.RatioImageView_riv_error, -1);
+        if (errorId != -1) {
+            errorDrawable = AppCompatResources.getDrawable(context, errorId);
+        }
         a.recycle();
+
     }
 
     /**
