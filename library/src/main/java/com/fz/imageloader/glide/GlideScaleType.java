@@ -5,15 +5,24 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.FitCenter;
 
+/**
+ * glide 缩放类型
+ *
+ * @author dingpeihua
+ * @version 1.0
+ * @date 2019/2/1 10:33
+ */
 public enum GlideScaleType {
     /**
      * 保持原图的纵横比计算一个比例，但是也要确保原图完全放入目标视图内，
      * 至少一个轴（X或Y）将精确配合。 结果以目标视图为中心。默认属性
-     *  @see {@link FitCenter}
+     *
+     * @see {@link FitCenter}
      */
     FIT_CENTER(0),
     /**
      * 缩小图像均匀（保持图像的纵横比），使图像的尺寸（宽度和高度）都等于或小于视图的对应尺寸（减去填充）。
+     *
      * @see {@link CenterInside}
      */
     CENTER_INSIDE(1),
