@@ -31,19 +31,19 @@ public class GifActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gif);
-        RatioImageView imageView1 = findViewById(R.id.giv_image_1);
+        RatioImageView imageView1 = findViewById(R.id.riv_image_1);
         int screenWidth = getScreenWidth();
         int newHeight = screenWidth / (500 / 208);
         imageView1.setImageUrl(urls[0], screenWidth, newHeight);
-        RatioImageView imageView2 = findViewById(R.id.giv_image_2);
+        RatioImageView imageView2 = findViewById(R.id.riv_image_2);
         newHeight = screenWidth / (500 / 253);
         imageView2.setImageUrl(urls[1], screenWidth, newHeight);
-        RatioImageView imageView3 = findViewById(R.id.giv_image_3);
+        RatioImageView imageView3 = findViewById(R.id.riv_image_3);
         newHeight = screenWidth / (500 / 300);
         imageView3.setImageUrl(urls[2], screenWidth, newHeight);
-        RatioImageView imageView4 = findViewById(R.id.giv_image_4);
+        RatioImageView imageView4 = findViewById(R.id.riv_image_4);
         imageView4.setImageUrl(urls[3]);
-        RatioImageView imageView5 = findViewById(R.id.giv_image_5);
+        RatioImageView imageView5 = findViewById(R.id.riv_image_5);
         imageView5.setImageUrl(urls[4]);
     }
 

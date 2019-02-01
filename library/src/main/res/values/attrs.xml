@@ -25,5 +25,12 @@
         <attr name="riv_height" format="dimension|reference" />
         <!--宽高比 即：width/height-->
         <attr name="riv_ratio" format="float" />
+        <!--图片缩放类型-->
+        <attr name="riv_scaleType" format="enum">
+            <enum name="fitCenter" value="0" />
+            <enum name="centerInside" value="1" />
+            <enum name="centerCrop" value="2" />
+            <enum name="circleCrop" value="3" />
+        </attr>
     </declare-styleable>
 </resources>

@@ -21,9 +21,9 @@ public class CropCircleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_circle);
-        RatioImageView imageView1 = findViewById(R.id.giv_image_1);
+        RatioImageView imageView1 = findViewById(R.id.riv_image_1);
         imageView1.setImageUrl(/*Constants.urls[0]*/"",550,550);
-        RatioImageView imageView2 = findViewById(R.id.giv_image_2);
+        RatioImageView imageView2 = findViewById(R.id.riv_image_2);
         imageView2.setImageUrl(Constants.urls[0]);
     }
 }

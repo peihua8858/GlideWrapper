@@ -22,7 +22,7 @@
             app:riv_width="180dp" />
 
         <com.fz.imageloader.widget.RatioImageView
-            android:id="@+id/giv_image_2"
+            android:id="@+id/riv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
@@ -32,7 +32,7 @@
             app:riv_width="90dp" />
 
         <com.fz.imageloader.widget.RatioImageView
-            android:id="@+id/giv_image_3"
+            android:id="@+id/riv_image_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"

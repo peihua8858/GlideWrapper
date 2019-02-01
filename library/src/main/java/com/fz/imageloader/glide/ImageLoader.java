@@ -89,7 +89,7 @@ public class ImageLoader {
         private RequestOptions requestOptions;
         private RequestOptions defaultRequestOptions;
         private Class<?> resourceType;
-        private ScaleType scaleType = null;
+        private GlideScaleType scaleType = null;
         private LoaderListener<?> loaderListener;
         private RoundedCornersTransformation.CornerType cornerType;
         /**
@@ -162,7 +162,7 @@ public class ImageLoader {
             return this;
         }
 
-        public Builder scaleType(@NonNull ScaleType val) {
+        public Builder scaleType(@NonNull GlideScaleType val) {
             scaleType = val;
             return this;
         }
@@ -418,6 +418,9 @@ public class ImageLoader {
                     case CENTER_CROP:
                         options.centerCrop();
                         break;
+                    case CIRCLE_CROP:
+                        options.circleCrop();
+                        break;
                     default:
                         break;
                 }
@@ -429,7 +432,7 @@ public class ImageLoader {
                 }
                 Uri uri = null;
                 if (imageUrl instanceof Integer) {
-                    uri = UriUtil.getResourceUri(context,(Integer) imageUrl);
+                    uri = UriUtil.getResourceUri(context, (Integer) imageUrl);
                 } else if (imageUrl instanceof String) {
                     url = (String) imageUrl;
                     if (url.startsWith("http")) {
@@ -497,9 +500,9 @@ public class ImageLoader {
         private final int overrideHeight;
         private final int overrideWidth;
         private final ImageView imageView;
-        private final ScaleType scaleType;
+        private final GlideScaleType scaleType;
 
-        public DRequestListener(LoaderListener loaderListener, ImageView imageView, ScaleType scaleType, int overrideWidth, int overrideHeight) {
+        public DRequestListener(LoaderListener loaderListener, ImageView imageView, GlideScaleType scaleType, int overrideWidth, int overrideHeight) {
             this.loaderListener = loaderListener;
             this.overrideWidth = overrideWidth;
             this.overrideHeight = overrideHeight;
@@ -536,7 +539,7 @@ public class ImageLoader {
             return false;
         }
 
-        void setScaleType(ImageView imageView, ScaleType scaleType) {
+        void setScaleType(ImageView imageView, GlideScaleType scaleType) {
             if (scaleType == null || imageView == null) {
                 return;
             }
@@ -554,33 +557,5 @@ public class ImageLoader {
                     break;
             }
         }
-    }
-
-    /**
-     * Options for scaling the bounds of an image to the bounds of this view.
-     */
-    public enum ScaleType {
-        /**
-         * Scale the image using {@link Matrix.ScaleToFit#CENTER}.
-         * From XML, use this syntax:
-         * <code>android:scaleType="fitCenter"</code>.
-         */
-        FIT_CENTER,
-        /**
-         * Scale the image uniformly (maintain the image's aspect ratio) so
-         * that both dimensions (width and height) of the image will be equal
-         * to or larger than the corresponding dimension of the view
-         * (minus padding). The image is then centered in the view.
-         * From XML, use this syntax: <code>android:scaleType="centerCrop"</code>.
-         */
-        CENTER_CROP,
-        /**
-         * Scale the image uniformly (maintain the image's aspect ratio) so
-         * that both dimensions (width and height) of the image will be equal
-         * to or less than the corresponding dimension of the view
-         * (minus padding). The image is then centered in the view.
-         * From XML, use this syntax: <code>android:scaleType="centerInside"</code>.
-         */
-        CENTER_INSIDE,
     }
 }

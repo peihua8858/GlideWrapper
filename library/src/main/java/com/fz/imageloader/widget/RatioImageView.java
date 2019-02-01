@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.fz.imageloader.R;
+import com.fz.imageloader.glide.GlideScaleType;
 import com.fz.imageloader.glide.ImageLoader;
 import com.fz.imageloader.glide.LoaderListener;
 import com.fz.imageloader.glide.RoundedCornersTransformation;
@@ -83,7 +84,16 @@ public class RatioImageView extends AppCompatImageView {
      * 宽度与高度的比值
      */
     private float aspectRatio = 0f;
+    private GlideScaleType scaleType;
     private LoaderListener<?> listener;
+    private Object mUri;
+    private RequestOptions mOptions;
+    private static final GlideScaleType[] sScaleTypeArray = {
+            GlideScaleType.FIT_CENTER,
+            GlideScaleType.CENTER_INSIDE,
+            GlideScaleType.CENTER_CROP,
+            GlideScaleType.CIRCLE_CROP
+    };
 
     public RatioImageView(Context context) {
         super(context);
@@ -111,7 +121,10 @@ public class RatioImageView extends AppCompatImageView {
         width = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_width, 0);
         height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
         aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
-
+        final int index = a.getInt(R.styleable.RatioImageView_riv_scaleType, -1);
+        if (index >= 0) {
+            setScaleType(sScaleTypeArray[index]);
+        }
         int placeholderId = a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1);
         if (placeholderId != -1) {
             placeholderDrawable = AppCompatResources.getDrawable(context, placeholderId);
@@ -122,6 +135,16 @@ public class RatioImageView extends AppCompatImageView {
         }
         a.recycle();
 
+    }
+
+    public void setScaleType(GlideScaleType scaleType) {
+        if (scaleType == null) {
+            throw new NullPointerException();
+        }
+        if (this.scaleType != scaleType) {
+            this.scaleType = scaleType;
+            setImageUrl(mUri, mOptions);
+        }
     }
 
     /**
@@ -299,10 +322,13 @@ public class RatioImageView extends AppCompatImageView {
         } else if (width != 0 && height != 0) {
             builder.override(width, height);
         }
+        this.mUri = uri;
+        this.mOptions = options;
         builder.apply(options)
                 .useAnimationPool(useAnimationPool)
                 .placeholder(placeholderDrawable)
                 .error(errorDrawable)
+                .scaleType(scaleType)
                 .rotateDegree(rotateDegree)
                 .load(uri)
                 .listener(listener)
