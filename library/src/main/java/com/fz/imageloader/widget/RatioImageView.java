@@ -1,5 +1,6 @@
 package com.fz.imageloader.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -298,6 +299,9 @@ public class RatioImageView extends AppCompatImageView {
         if (uri == null) {
             return;
         }
+        if (!checkContext()) {
+            return;
+        }
         ImageLoader.Builder builder = ImageLoader.createBuilder();
         if (isCropCircle) {
             builder.cropCircle();
@@ -354,6 +358,19 @@ public class RatioImageView extends AppCompatImageView {
             }
         }
         super.onDraw(canvas);
+    }
+
+    /**
+     * 检查Context是否可以加载图片，避免出现"You cannot start a load for a destroyed activity"崩溃
+     * {@link com.bumptech.glide.manager.RequestManagerRetriever#assertNotDestroyed(Activity)}
+     * @return context是否可以加载图片
+     */
+    private boolean checkContext() {
+        if (getContext() instanceof Activity) {
+            final Activity activity = (Activity) getContext();
+            return !activity.isDestroyed() && !activity.isFinishing();
+        }
+        return true;
     }
 
     public void setPlaceholderDrawable(Drawable placeholderDrawable) {
