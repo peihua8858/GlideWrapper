@@ -470,7 +470,6 @@ public class ImageLoader {
                     } else {
                         requestManager = Glide.with(imageView);
                     }
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     RequestListener requestListener = new DRequestListener(loaderListener, imageView, scaleType, overrideWidth, overrideHeight);
                     RequestBuilder requestBuilder;
                     if (asGif) {

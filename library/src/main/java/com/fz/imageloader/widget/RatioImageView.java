@@ -419,5 +419,9 @@ public class RatioImageView extends AppCompatImageView {
     public float getRatio() {
         return aspectRatio;
     }
+
+    public GlideScaleType getGlideScaleType() {
+        return scaleType;
+    }
 }
 
