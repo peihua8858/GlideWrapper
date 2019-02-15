@@ -191,32 +191,31 @@ public class RatioImageView extends AppCompatImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (aspectRatio == 0.0) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        } else if (aspectRatio > 0) {
+        if (aspectRatio > 0) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
             int height = Math.round(width / aspectRatio);
             try {
                 setMeasuredDimension(width, height);
+                return;
             } catch (Exception e) {
-                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
                 e.printStackTrace();
             }
         } else { // radio <0 高度随图片变
             Drawable d = getDrawable();
             if (d != null) {
-                // ceil not round - avoid thin vertical gaps along the left/right edges
-                int width = MeasureSpec.getSize(widthMeasureSpec);
-                //宽度定- 高度根据使得图片的宽度充满屏幕
-                int height = (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
                 try {
+                    // ceil not round - avoid thin vertical gaps along the left/right edges
+                    int width = MeasureSpec.getSize(widthMeasureSpec);
+                    //宽度定- 高度根据使得图片的宽度充满屏幕
+                    int height = (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
                     setMeasuredDimension(width, height);
+                    return;
                 } catch (Exception e) {
                     e.printStackTrace();
-                    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
                 }
             }
         }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     /**
