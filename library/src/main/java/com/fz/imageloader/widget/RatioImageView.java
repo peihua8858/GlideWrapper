@@ -85,6 +85,10 @@ public class RatioImageView extends AppCompatImageView {
      * 宽度与高度的比值
      */
     private float aspectRatio = 0f;
+    /**
+     * 是否自动以图片大小计算控件显示大小
+     */
+    private boolean isAutoCalSize;
     private GlideScaleType scaleType;
     private LoaderListener<?> listener;
     private Object mUri;
@@ -123,6 +127,7 @@ public class RatioImageView extends AppCompatImageView {
         height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
         aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
         final int index = a.getInt(R.styleable.RatioImageView_riv_scaleType, -1);
+        isAutoCalSize = a.getBoolean(R.styleable.RatioImageView_riv_auto_size, false);
         if (index >= 0) {
             setScaleType(sScaleTypeArray[index]);
         }
@@ -200,7 +205,8 @@ public class RatioImageView extends AppCompatImageView {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else { // radio <0 高度随图片变
+        } else if (isAutoCalSize) {
+            // radio <0 高度随图片变
             Drawable d = getDrawable();
             if (d != null) {
                 try {
@@ -362,6 +368,7 @@ public class RatioImageView extends AppCompatImageView {
     /**
      * 检查Context是否可以加载图片，避免出现"You cannot start a load for a destroyed activity"崩溃
      * {@link com.bumptech.glide.manager.RequestManagerRetriever#assertNotDestroyed(Activity)}
+     *
      * @return context是否可以加载图片
      */
     private boolean checkContext() {
@@ -438,6 +445,14 @@ public class RatioImageView extends AppCompatImageView {
 
     public GlideScaleType getGlideScaleType() {
         return scaleType;
+    }
+
+    public boolean isAutoCalSize() {
+        return isAutoCalSize;
+    }
+
+    public void setAutoCalSize(boolean autoCalSize) {
+        isAutoCalSize = autoCalSize;
     }
 }
 
