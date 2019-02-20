@@ -13,6 +13,7 @@ import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.fz.imageloader.R;
 import com.fz.imageloader.glide.GlideScaleType;
@@ -91,6 +92,7 @@ public class RatioImageView extends AppCompatImageView {
     private boolean isAutoCalSize;
     private GlideScaleType scaleType;
     private LoaderListener<?> listener;
+    private RequestListener<?> requestListener;
     private Object mUri;
     private RequestOptions mOptions;
     private static final GlideScaleType[] sScaleTypeArray = {
@@ -163,6 +165,18 @@ public class RatioImageView extends AppCompatImageView {
      */
     public void setListener(LoaderListener<?> listener) {
         this.listener = listener;
+    }
+
+    /**
+     * 监听图片是否加载成功
+     *
+     * @param listener
+     * @author dingpeihua
+     * @date 2019/1/2 18:04
+     * @version 1.0
+     */
+    public void setListener(RequestListener<?> listener) {
+        this.requestListener = listener;
     }
 
     /**
@@ -341,6 +355,7 @@ public class RatioImageView extends AppCompatImageView {
                 .rotateDegree(rotateDegree)
                 .load(uri)
                 .listener(listener)
+                .listener(requestListener)
                 .into(this)
                 .submit();
     }

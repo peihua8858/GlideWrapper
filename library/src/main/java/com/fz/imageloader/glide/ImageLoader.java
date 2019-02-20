@@ -91,6 +91,7 @@ public class ImageLoader {
         private Class<?> resourceType;
         private GlideScaleType scaleType = null;
         private LoaderListener<?> loaderListener;
+        private RequestListener<?> requestListener;
         private RoundedCornersTransformation.CornerType cornerType;
         /**
          * 图片地址 包括网络地址、本地文件地址、资源id等
@@ -169,6 +170,11 @@ public class ImageLoader {
 
         public Builder listener(@NonNull LoaderListener val) {
             loaderListener = val;
+            return this;
+        }
+
+        public Builder listener(RequestListener listener) {
+            this.requestListener = listener;
             return this;
         }
 
@@ -470,7 +476,6 @@ public class ImageLoader {
                     } else {
                         requestManager = Glide.with(imageView);
                     }
-                    RequestListener requestListener = new DRequestListener(loaderListener, imageView, scaleType, overrideWidth, overrideHeight);
                     RequestBuilder requestBuilder;
                     if (asGif) {
                         requestBuilder = requestManager.asGif();
@@ -479,8 +484,12 @@ public class ImageLoader {
                     } else {
                         requestBuilder = requestManager.asBitmap();
                     }
+                    if (requestListener != null) {
+                        requestBuilder.listener(requestListener);
+                    } else if (loaderListener != null) {
+                        requestBuilder.listener(new DRequestListener<>(loaderListener, overrideWidth, overrideHeight));
+                    }
                     requestBuilder.load(uri).apply(options)
-                            .listener(requestListener)
                             .into(imageView);
                 }
             }
@@ -498,15 +507,11 @@ public class ImageLoader {
         private final LoaderListener loaderListener;
         private final int overrideHeight;
         private final int overrideWidth;
-        private final ImageView imageView;
-        private final GlideScaleType scaleType;
 
-        public DRequestListener(LoaderListener loaderListener, ImageView imageView, GlideScaleType scaleType, int overrideWidth, int overrideHeight) {
+        public DRequestListener(LoaderListener loaderListener, int overrideWidth, int overrideHeight) {
             this.loaderListener = loaderListener;
             this.overrideWidth = overrideWidth;
             this.overrideHeight = overrideHeight;
-            this.imageView = imageView;
-            this.scaleType = scaleType;
         }
 
         @Override
@@ -514,13 +519,11 @@ public class ImageLoader {
             if (loaderListener != null) {
                 return loaderListener.onError(e);
             }
-            setScaleType(imageView, scaleType);
             return false;
         }
 
         @Override
         public boolean onResourceReady(RESOURCE resource, Object model, Target<RESOURCE> target, DataSource dataSource, boolean isFirstResource) {
-            setScaleType(imageView, scaleType);
             if (loaderListener != null) {
                 int width = overrideWidth;
                 int height = overrideHeight;
@@ -536,25 +539,6 @@ public class ImageLoader {
                 return loaderListener.onSuccess(resource, width, height);
             }
             return false;
-        }
-
-        void setScaleType(ImageView imageView, GlideScaleType scaleType) {
-            if (scaleType == null || imageView == null) {
-                return;
-            }
-            switch (scaleType) {
-                case FIT_CENTER:
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    break;
-                case CENTER_INSIDE:
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                    break;
-                case CENTER_CROP:
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }
