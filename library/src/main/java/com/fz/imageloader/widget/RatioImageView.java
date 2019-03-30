@@ -379,7 +379,7 @@ public class RatioImageView extends AppCompatImageView {
         }
         try {
             super.onDraw(canvas);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
