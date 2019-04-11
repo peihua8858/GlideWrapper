@@ -7,10 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.request.RequestListener;
@@ -20,6 +16,11 @@ import com.fz.imageloader.glide.GlideScaleType;
 import com.fz.imageloader.glide.ImageLoader;
 import com.fz.imageloader.glide.LoaderListener;
 import com.fz.imageloader.glide.RoundedCornersTransformation;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * 封装glide图片加载处理及变换，但由于glide限制不支持多种变换组合。
@@ -266,7 +267,7 @@ public class RatioImageView extends AppCompatImageView {
         }
         RequestOptions options = new RequestOptions();
         if (width != 0 && height != 0) {
-            options.override(width, height);
+            options.apply(RequestOptions.overrideOf(width, height)) ;
         } else if (sizeMultiplier != 0) {
             options.sizeMultiplier(sizeMultiplier);
         }

@@ -16,11 +16,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
 import java.net.URL;
+
+import androidx.annotation.Nullable;
 
 /**
  * uri处理工具类

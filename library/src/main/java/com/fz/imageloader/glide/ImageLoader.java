@@ -4,14 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.FloatRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -30,6 +24,12 @@ import com.bumptech.glide.request.target.Target;
 import com.fz.imageloader.utils.UriUtil;
 
 import java.io.File;
+
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 /**
  * 使用Glide加载并显示图片
@@ -358,7 +358,7 @@ public class ImageLoader {
                 options.autoClone();
             }
             if (overrideHeight > 0 || overrideWidth > 0) {
-                options.override(overrideWidth > 0 ? overrideWidth : overrideHeight,
+                RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
                         overrideHeight > 0 ? overrideHeight : overrideWidth);
             }
             if (sizeMultiplier > 0) {

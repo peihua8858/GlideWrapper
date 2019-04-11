@@ -1,7 +1,6 @@
 package com.globalegrow.glideview.glide;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +17,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.globalegrow.glideview.BuildConfig;
 
 import java.io.InputStream;
+
+import androidx.annotation.NonNull;
 
 /**
  * 所以你知道要创建一个额外的类去定制 Glide。

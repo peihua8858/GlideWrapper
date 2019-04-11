@@ -5,7 +5,6 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url 'http://10.32.2.200:8081/repository/maven-public/' }
-        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'

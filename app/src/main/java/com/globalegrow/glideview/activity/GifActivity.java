@@ -2,14 +2,14 @@ package com.globalegrow.glideview.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.fz.imageloader.widget.RatioImageView;
-import com.globalegrow.glideview.Constants;
 import com.globalegrow.glideview.R;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * 灰度变换
