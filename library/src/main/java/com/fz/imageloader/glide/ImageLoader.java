@@ -9,6 +9,12 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
@@ -24,12 +30,6 @@ import com.bumptech.glide.request.target.Target;
 import com.fz.imageloader.utils.UriUtil;
 
 import java.io.File;
-
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 /**
  * 使用Glide加载并显示图片
@@ -358,8 +358,8 @@ public class ImageLoader {
                 options.autoClone();
             }
             if (overrideHeight > 0 || overrideWidth > 0) {
-                RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
-                        overrideHeight > 0 ? overrideHeight : overrideWidth);
+                options.apply(RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
+                        overrideHeight > 0 ? overrideHeight : overrideWidth));
             }
             if (sizeMultiplier > 0) {
                 options.sizeMultiplier(sizeMultiplier);
@@ -458,8 +458,10 @@ public class ImageLoader {
                     //判断当前url是不是gif
                     int index = url.lastIndexOf(".");
                     if (index != -1) {
+                        int lastIndex = url.indexOf("?");
+                        lastIndex = lastIndex > 0 ? lastIndex : url.length();
                         //有点图片地址没有后缀
-                        String urlSuffix = url.substring(index);
+                        String urlSuffix = url.substring(index, lastIndex);
                         asGif = ".gif".equalsIgnoreCase(urlSuffix);
                     }
                 }
@@ -489,7 +491,7 @@ public class ImageLoader {
                     } else if (loaderListener != null) {
                         requestBuilder.listener(new DRequestListener<>(loaderListener, overrideWidth, overrideHeight));
                     }
-                    requestBuilder.load(uri).apply(options)
+                    requestBuilder.apply(options).load(uri)
                             .into(imageView);
                 }
             }

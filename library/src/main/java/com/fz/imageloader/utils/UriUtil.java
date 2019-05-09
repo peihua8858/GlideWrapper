@@ -16,10 +16,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLConnection;
 
 import androidx.annotation.Nullable;
 
@@ -278,5 +280,12 @@ public class UriUtil {
             Log.w("UriUtil", "Received invalid resource id: " + model, e);
             return null;
         }
+    }
+
+    public static String getMIMETypeFromUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return "";
+        }
+        return URLConnection.guessContentTypeFromName(url);
     }
 }

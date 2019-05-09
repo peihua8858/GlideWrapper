@@ -23,7 +23,7 @@ public class CropCircleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_circle);
         RatioImageView imageView1 = findViewById(R.id.riv_image_1);
-        imageView1.setImageUrl(/*Constants.urls[0]*/"",550,550);
+        imageView1.setImageUrl("https://uidesign.rglcdn.com/RG/image/banner/20190118_7301/love.gif?imbypass=true",550,550);
         RatioImageView imageView2 = findViewById(R.id.riv_image_2);
         imageView2.setImageUrl(Constants.urls[0]);
     }
