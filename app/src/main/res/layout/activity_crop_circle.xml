@@ -30,6 +30,14 @@
             app:riv_isCropCircle="true"
             app:riv_placeholder="@drawable/ic_android_placehold"
             app:riv_width="60dp" />
-
+        <com.fz.imageloader.widget.RatioImageView
+            android:id="@+id/riv_image_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_height="60dp"
+            app:riv_placeholder="@drawable/ic_android_placehold"
+            app:riv_isShowGif="true"
+            app:riv_width="60dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -36,11 +36,11 @@ import androidx.appcompat.widget.AppCompatImageView;
  */
 public class RatioImageView extends AppCompatImageView {
     /**
-     * {@link RequestOptions#placeholderDrawable}
+     * {@link RequestOptions#getPlaceholderDrawable()}
      */
     private Drawable placeholderDrawable;
     /**
-     * {@link RequestOptions#errorPlaceholder}
+     * {@link RequestOptions#getErrorPlaceholder()}
      */
     private Drawable errorDrawable;
     /**
@@ -68,7 +68,7 @@ public class RatioImageView extends AppCompatImageView {
      */
     private int rotateDegree;
     /**
-     * {@link RequestOptions#useAnimationPool}
+     * {@link RequestOptions#useAnimationPool(boolean)}
      */
     private boolean useAnimationPool;
     /**
@@ -76,7 +76,7 @@ public class RatioImageView extends AppCompatImageView {
      */
     private int width, height;
     /**
-     * {@link RequestOptions#sizeMultiplier}
+     * {@link RequestOptions#sizeMultiplier(float)}
      */
     private float sizeMultiplier = 0f;
     /**
@@ -91,6 +91,10 @@ public class RatioImageView extends AppCompatImageView {
      * 是否自动以图片大小计算控件显示大小
      */
     private boolean isAutoCalSize;
+    /**
+     * 是否显示GIF
+     */
+    private boolean isShowGif;
     private GlideScaleType scaleType;
     private LoaderListener<?> listener;
     private RequestListener<?> requestListener;
@@ -131,6 +135,8 @@ public class RatioImageView extends AppCompatImageView {
         aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
         final int index = a.getInt(R.styleable.RatioImageView_riv_scaleType, -1);
         isAutoCalSize = a.getBoolean(R.styleable.RatioImageView_riv_auto_size, false);
+        isShowGif = a.getBoolean(R.styleable.RatioImageView_riv_isShowGif, false);
+
         if (index >= 0) {
             setScaleType(sScaleTypeArray[index]);
         }
@@ -252,6 +258,20 @@ public class RatioImageView extends AppCompatImageView {
     }
 
     /**
+     * 根据文件对象加载图片
+     *
+     * @param url       需要加载的路径
+     * @param isShowGif 是否加载GIF
+     * @author dingpeihua
+     * @date 2017/7/4 15:06
+     * @version 1.0
+     */
+    public void setImageUrl(Object url, boolean isShowGif) {
+        setShowGif(isShowGif);
+        setImageUrl(url, 0, 0);
+    }
+
+    /**
      * 统一资源标志符加载图片,如果传入的宽和高大于0，则自动压缩图片以适应传入的宽和高
      *
      * @param uri    需要加载图片的统一资源标志符
@@ -267,7 +287,7 @@ public class RatioImageView extends AppCompatImageView {
         }
         RequestOptions options = new RequestOptions();
         if (width != 0 && height != 0) {
-            options.apply(RequestOptions.overrideOf(width, height)) ;
+            options.apply(RequestOptions.overrideOf(width, height));
         } else if (sizeMultiplier != 0) {
             options.sizeMultiplier(sizeMultiplier);
         }
@@ -293,7 +313,7 @@ public class RatioImageView extends AppCompatImageView {
      * 统一资源标志符加载图片,如果传入的宽和高大于0，则自动压缩图片以适应传入的宽和高
      *
      * @param uri            需要加载图片的统一资源标志符
-     * @param sizeMultiplier {@link RequestOptions#sizeMultiplier}
+     * @param sizeMultiplier {@link RequestOptions#sizeMultiplier(float)}
      * @author dingpeihua
      * @date 2017/7/4 15:07
      * @version 1.0
@@ -349,6 +369,7 @@ public class RatioImageView extends AppCompatImageView {
         this.mUri = uri;
         this.mOptions = options;
         builder.apply(options)
+                .showGif(isShowGif)
                 .useAnimationPool(useAnimationPool)
                 .placeholder(placeholderDrawable)
                 .error(errorDrawable)
@@ -473,6 +494,14 @@ public class RatioImageView extends AppCompatImageView {
 
     public void setAutoCalSize(boolean autoCalSize) {
         isAutoCalSize = autoCalSize;
+    }
+
+    public boolean isShowGif() {
+        return isShowGif;
+    }
+
+    public void setShowGif(boolean showGif) {
+        isShowGif = showGif;
     }
 }
 

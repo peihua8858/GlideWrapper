@@ -23,6 +23,8 @@
         <attr name="riv_width" format="dimension|reference" />
         <!--目标高度-->
         <attr name="riv_height" format="dimension|reference" />
+        <!--是否加载GIF图片-->
+        <attr name="riv_isShowGif" format="boolean" />
         <!--宽高比 即：width/height-->
         <attr name="riv_ratio" format="float" />
         <!--图片缩放类型-->
