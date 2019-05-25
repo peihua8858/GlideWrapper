@@ -24,6 +24,7 @@ import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -87,12 +88,12 @@ public class ImageLoader {
         private boolean onlyRetrieveFromCache;
         private boolean useAnimationPool;
         private RequestOptions requestOptions;
-        private RequestOptions defaultRequestOptions;
         private Class<?> resourceType;
         private GlideScaleType scaleType = null;
         private LoaderListener<?> loaderListener;
         private RequestListener<?> requestListener;
         private RoundedCornersTransformation.CornerType cornerType;
+        private MultiTransformation multiTransformation = new MultiTransformation();
         /**
          * 图片地址 包括网络地址、本地文件地址、资源id等
          */
@@ -135,31 +136,26 @@ public class ImageLoader {
         private boolean isShowGif;
 
         public Builder() {
-            defaultRequestOptions = new RequestOptions();
         }
 
         public Builder(Context context) {
             this.context = context;
-            defaultRequestOptions = new RequestOptions();
         }
 
         public Builder(Activity activity) {
             this.activity = activity;
             this.context = activity;
-            defaultRequestOptions = new RequestOptions();
         }
 
         public Builder(Fragment fragment) {
             this.fragment = fragment;
             this.context = fragment.getContext();
-            defaultRequestOptions = new RequestOptions();
         }
 
         public Builder(FragmentActivity fragmentActivity) {
             this.fragmentActivity = fragmentActivity;
             this.activity = fragmentActivity;
             this.context = fragmentActivity;
-            defaultRequestOptions = new RequestOptions();
         }
 
         public Builder load(@NonNull Object val) {
@@ -197,18 +193,8 @@ public class ImageLoader {
             return this;
         }
 
-        public Builder transforms(@NonNull Transformation<Bitmap>... transformations) {
-            defaultRequestOptions.transforms(transformations);
-            return this;
-        }
-
-        public <T> Builder transform(@NonNull Class<T> resourceClass, @NonNull Transformation<T> transformation) {
-            defaultRequestOptions.transform(resourceClass, transformation);
-            return this;
-        }
-
-        public Builder transform(@NonNull Transformation<Bitmap> transformation) {
-            defaultRequestOptions.transform(transformation);
+        public <T> Builder transforms(@NonNull Transformation<T>... transformations) {
+            multiTransformation.addTransforms(transformations);
             return this;
         }
 
@@ -362,16 +348,15 @@ public class ImageLoader {
 
         public void submit() {
             RequestOptions options = new RequestOptions();
-            options.apply(defaultRequestOptions);
             if (isAutoCloneEnabled) {
                 options.autoClone();
             }
             if (overrideHeight > 0 || overrideWidth > 0) {
-                options.apply(RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
+                options = options.apply(RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
                         overrideHeight > 0 ? overrideHeight : overrideWidth));
             }
             if (sizeMultiplier > 0) {
-                options.sizeMultiplier(sizeMultiplier);
+                options = options.sizeMultiplier(sizeMultiplier);
             }
             if (diskCacheStrategy != null) {
                 options.diskCacheStrategy(diskCacheStrategy);
@@ -408,16 +393,22 @@ public class ImageLoader {
                 options.theme(theme);
             }
             if (isCropCircle) {
-                options.circleCrop();
+                multiTransformation.addTransform(new CircleCrop());
             }
             if (roundedRadius > 0) {
-                options.transform(new RoundedCornersTransformation(roundedRadius, roundedMargin, cornerType));
-            } else if (isGrayScale) {
-                options.transform(new GrayScaleTransformation());
-            } else if (isBlur) {
-                options.transform(new BlurTransformation(fuzzyRadius, sampling));
-            } else if (rotateDegree > 0) {
-                options.transform(new RotateTransformation(rotateDegree));
+                multiTransformation.addTransform(new RoundedCornersTransformation(roundedRadius, roundedMargin, cornerType));
+            }
+            if (isGrayScale) {
+                multiTransformation.addTransform(new GrayScaleTransformation());
+            }
+            if (isBlur) {
+                multiTransformation.addTransform(new BlurTransformation(fuzzyRadius, sampling));
+            }
+            if (rotateDegree > 0) {
+                multiTransformation.addTransform(new RotateTransformation(rotateDegree));
+            }
+            if (!multiTransformation.isEmpty()) {
+                options.transform(multiTransformation);
             }
             options.useUnlimitedSourceGeneratorsPool(useUnlimitedSourceGeneratorsPool);
             options.onlyRetrieveFromCache(onlyRetrieveFromCache);

@@ -35,6 +35,16 @@
             <enum name="circleCrop" value="3" />
         </attr>
         <!--自动以图片大小计算控件大小-->
-        <attr name="riv_auto_size" format="boolean" />
+
+        <attr name="riv_autoSize"  format="boolean" />
+        <!--图片反转方向 默认不反转，-->
+        <attr name="riv_reverseDirection" format="enum">
+            <!-- 垂直反转 -->
+            <enum name="vertical" value="1" />
+            <!-- 水平反转 -->
+            <enum name="horizontal" value="2" />
+            <!-- Locale.根据本地语言反转 -->
+            <enum name="locale" value="3" />
+        </attr>
     </declare-styleable>
 </resources>

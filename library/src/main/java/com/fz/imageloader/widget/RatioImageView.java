@@ -2,6 +2,8 @@ package com.fz.imageloader.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -15,12 +17,20 @@ import com.fz.imageloader.R;
 import com.fz.imageloader.glide.GlideScaleType;
 import com.fz.imageloader.glide.ImageLoader;
 import com.fz.imageloader.glide.LoaderListener;
+import com.fz.imageloader.glide.MatrixTransformation;
 import com.fz.imageloader.glide.RoundedCornersTransformation;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.text.TextUtilsCompat;
+import androidx.core.view.ViewCompat;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.Locale;
 
 /**
  * 封装glide图片加载处理及变换，但由于glide限制不支持多种变换组合。
@@ -35,6 +45,41 @@ import androidx.appcompat.widget.AppCompatImageView;
  * @date 2019/1/2 09:50
  */
 public class RatioImageView extends AppCompatImageView {
+    /**
+     * 垂直反转
+     */
+    final float[] VERTICAL_MATRIX = new float[]{1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f};
+    /**
+     * 水平反转
+     */
+    final float[] HORIZONTAL_MATRIX = new float[]{-1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f};
+    /**
+     * 垂直方向反转
+     */
+    public static final int REVERSE_VERTICAL = 1;
+    /**
+     * 水平方向反转
+     */
+    public static final int REVERSE_HORIZONTAL = 2;
+    /**
+     * 根据本地语言方向反转
+     */
+    public static final int REVERSE_LOCALE = 3;
+
+    @IntDef({REVERSE_VERTICAL, REVERSE_HORIZONTAL, REVERSE_LOCALE})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Direction {
+    }
+
+    private static final GlideScaleType[] sScaleTypeArray = {
+            GlideScaleType.FIT_CENTER,
+            GlideScaleType.CENTER_INSIDE,
+            GlideScaleType.CENTER_CROP,
+            GlideScaleType.CIRCLE_CROP
+    };
+    private static final int[] sReverseDirection = {
+            REVERSE_VERTICAL, REVERSE_HORIZONTAL, REVERSE_LOCALE
+    };
     /**
      * {@link RequestOptions#getPlaceholderDrawable()}
      */
@@ -95,17 +140,32 @@ public class RatioImageView extends AppCompatImageView {
      * 是否显示GIF
      */
     private boolean isShowGif;
+    /**
+     * glide图片缩放类型
+     */
     private GlideScaleType scaleType;
+    /**
+     * 加载监听器
+     */
     private LoaderListener<?> listener;
+    /**
+     * glide 请求监听器
+     */
     private RequestListener<?> requestListener;
+    /**
+     * 图片地址，可以是资源id(Integer) ，http地址及file文件路径
+     */
     private Object mUri;
+    /**
+     * 请求选项
+     */
     private RequestOptions mOptions;
-    private static final GlideScaleType[] sScaleTypeArray = {
-            GlideScaleType.FIT_CENTER,
-            GlideScaleType.CENTER_INSIDE,
-            GlideScaleType.CENTER_CROP,
-            GlideScaleType.CIRCLE_CROP
-    };
+    @Direction
+    private int reverseDirection = 0;
+    /**
+     * 矩阵变化
+     */
+    private float matrixValues[];
 
     public RatioImageView(Context context) {
         super(context);
@@ -134,11 +194,14 @@ public class RatioImageView extends AppCompatImageView {
         height = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_height, 0);
         aspectRatio = a.getFloat(R.styleable.RatioImageView_riv_ratio, 0.0f);
         final int index = a.getInt(R.styleable.RatioImageView_riv_scaleType, -1);
-        isAutoCalSize = a.getBoolean(R.styleable.RatioImageView_riv_auto_size, false);
+        isAutoCalSize = a.getBoolean(R.styleable.RatioImageView_riv_autoSize, false);
         isShowGif = a.getBoolean(R.styleable.RatioImageView_riv_isShowGif, false);
-
+        final int reverseIndex = a.getInt(R.styleable.RatioImageView_riv_reverseDirection, -1);
         if (index >= 0) {
             setScaleType(sScaleTypeArray[index]);
+        }
+        if (reverseIndex >= 1) {
+            setReverseDirection(sReverseDirection[reverseIndex - 1]);
         }
         int placeholderId = a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1);
         if (placeholderId != -1) {
@@ -160,6 +223,23 @@ public class RatioImageView extends AppCompatImageView {
             this.scaleType = scaleType;
             setImageUrl(mUri, mOptions);
         }
+    }
+
+    public void setReverseDirection(@Direction int reverseDirection) {
+        this.reverseDirection = reverseDirection;
+    }
+
+    @Direction
+    public int getReverseDirection() {
+        return reverseDirection;
+    }
+
+    public float[] getMatrixValues() {
+        return matrixValues;
+    }
+
+    public void setMatrixValues(float[] matrixValues) {
+        this.matrixValues = matrixValues;
     }
 
     /**
@@ -366,6 +446,31 @@ public class RatioImageView extends AppCompatImageView {
         } else if (width != 0 && height != 0) {
             builder.override(width, height);
         }
+        if (reverseDirection > 0) {
+            float values[] = null;
+            switch (reverseDirection) {
+                case REVERSE_VERTICAL:
+                    //垂直反转
+                    values = VERTICAL_MATRIX;
+                    break;
+                case REVERSE_HORIZONTAL:
+                    //水平反转，
+                    values = HORIZONTAL_MATRIX;
+                    break;
+                case REVERSE_LOCALE:
+                    //如果是RTL 则图片反向，否则保持不变
+                    values = isRtl() ? HORIZONTAL_MATRIX : null;
+                    break;
+                default:
+                    break;
+            }
+            if (values != null) {
+                builder.transforms(new MatrixTransformation(values));
+            }
+        }
+        if (matrixValues != null && matrixValues.length > 0) {
+            builder.transforms(new MatrixTransformation(matrixValues));
+        }
         this.mUri = uri;
         this.mOptions = options;
         builder.apply(options)
@@ -380,6 +485,15 @@ public class RatioImageView extends AppCompatImageView {
                 .listener(requestListener)
                 .into(this)
                 .submit();
+    }
+
+    boolean isRtl() {
+        Context context = getContext();
+        Resources resources = context != null ? context.getResources() : null;
+        Configuration configuration = resources != null ? resources.getConfiguration() : null;
+        int layoutDirection = configuration != null ? configuration.getLayoutDirection() :
+                TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault());
+        return layoutDirection == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
     /**

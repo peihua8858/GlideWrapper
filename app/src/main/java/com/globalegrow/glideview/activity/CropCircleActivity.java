@@ -22,11 +22,14 @@ public class CropCircleActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_circle);
-        RatioImageView imageView1 = findViewById(R.id.riv_image_1);
-        imageView1.setImageUrl("https://uidesign.rglcdn.com/RG/image/banner/20190118_7301/love.gif?imbypass=true",550,550);
+//        RatioImageView imageView1 = findViewById(R.id.riv_image_1);
+//        imageView1.setImageUrl("https://uidesign.rglcdn.com/RG/image/banner/20190118_7301/love.gif?imbypass=true",550,550);
         RatioImageView imageView2 = findViewById(R.id.riv_image_2);
+        imageView2.setReverseDirection(RatioImageView.REVERSE_HORIZONTAL);
+        imageView2.setGrayScale(true);
         imageView2.setImageUrl(Constants.urls[0]);
         RatioImageView imageView3 = findViewById(R.id.riv_image_3);
+        imageView3.setReverseDirection(RatioImageView.REVERSE_VERTICAL);
         imageView3.setImageUrl(R.drawable.ic_birthday);
 
     }
