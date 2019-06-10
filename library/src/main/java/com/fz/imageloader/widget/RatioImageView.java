@@ -11,6 +11,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.text.TextUtilsCompat;
+import androidx.core.view.ViewCompat;
+
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.fz.imageloader.R;
@@ -19,14 +28,6 @@ import com.fz.imageloader.glide.ImageLoader;
 import com.fz.imageloader.glide.LoaderListener;
 import com.fz.imageloader.glide.MatrixTransformation;
 import com.fz.imageloader.glide.RoundedCornersTransformation;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IntDef;
-import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.text.TextUtilsCompat;
-import androidx.core.view.ViewCompat;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -165,15 +166,14 @@ public class RatioImageView extends AppCompatImageView {
     /**
      * 矩阵变化
      */
-    private float matrixValues[];
+    private float[] matrixValues;
 
     public RatioImageView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public RatioImageView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        inflate(context, attrs, 0);
+        this(context, attrs, 0);
     }
 
     public RatioImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -182,7 +182,7 @@ public class RatioImageView extends AppCompatImageView {
     }
 
     protected void inflate(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RatioImageView, defStyleAttr, 0);
         roundedRadius = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedRadius, 0);
         roundedMargin = a.getDimensionPixelSize(R.styleable.RatioImageView_riv_roundedMargin, 0);
         isGrayScale = a.getBoolean(R.styleable.RatioImageView_riv_grayScale, false);
@@ -203,16 +203,30 @@ public class RatioImageView extends AppCompatImageView {
         if (reverseIndex >= 1) {
             setReverseDirection(sReverseDirection[reverseIndex - 1]);
         }
-        int placeholderId = a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1);
-        if (placeholderId != -1) {
-            placeholderDrawable = AppCompatResources.getDrawable(context, placeholderId);
-        }
-        int errorId = a.getResourceId(R.styleable.RatioImageView_riv_error, -1);
-        if (errorId != -1) {
-            errorDrawable = AppCompatResources.getDrawable(context, errorId);
-        }
+        placeholderDrawable = getDrawable(context, a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1));
+        errorDrawable = getDrawable(context, a.getResourceId(R.styleable.RatioImageView_riv_error, -1));
         a.recycle();
 
+    }
+
+    protected final Drawable getDrawable(Context context, int resId) {
+        if (resId != -1) {
+            return null;
+        }
+        Drawable drawable = null;
+        try {
+            drawable = AppCompatResources.getDrawable(context, resId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (drawable == null) {
+            try {
+                drawable = ResourcesCompat.getDrawable(getResources(), resId, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return drawable;
     }
 
     public void setScaleType(GlideScaleType scaleType) {
