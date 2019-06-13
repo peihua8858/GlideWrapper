@@ -210,7 +210,7 @@ public class RatioImageView extends AppCompatImageView {
     }
 
     protected final Drawable getDrawable(Context context, int resId) {
-        if (resId != -1) {
+        if (resId == -1) {
             return null;
         }
         Drawable drawable = null;
