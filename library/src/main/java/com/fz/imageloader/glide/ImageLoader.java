@@ -1,5 +1,6 @@
 package com.fz.imageloader.glide;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.fz.imageloader.utils.UriUtil;
+import com.fz.imageloader.utils.Utils;
 
 import java.io.File;
 
@@ -63,7 +65,7 @@ public class ImageLoader {
         return new Builder(fragmentActivity);
     }
 
-    public static class Builder {
+    public final static class Builder {
         private Context context;
         private Fragment fragment;
         private Activity activity;
@@ -93,7 +95,7 @@ public class ImageLoader {
         private LoaderListener<?> loaderListener;
         private RequestListener<?> requestListener;
         private RoundedCornersTransformation.CornerType cornerType;
-        private MultiTransformation multiTransformation = new MultiTransformation();
+        private MultiTransformation multiTransformation = new MultiTransformation<>();
         /**
          * 图片地址 包括网络地址、本地文件地址、资源id等
          */
@@ -346,6 +348,8 @@ public class ImageLoader {
             return this;
         }
 
+        @SuppressLint("CheckResult")
+        @SuppressWarnings("unchecked")
         public void submit() {
             RequestOptions options = new RequestOptions();
             if (isAutoCloneEnabled) {
@@ -493,6 +497,9 @@ public class ImageLoader {
                     } else if (loaderListener != null) {
                         requestBuilder.listener(new DRequestListener<>(loaderListener, overrideWidth, overrideHeight));
                     }
+                    if (!Utils.checkOptions(options)) {
+                        options.override(Target.SIZE_ORIGINAL);
+                    }
                     requestBuilder.apply(options).load(uri)
                             .into(imageView);
                 }
@@ -507,6 +514,7 @@ public class ImageLoader {
      * @version 1.0
      * @date 2019/1/2 17:35
      */
+    @SuppressWarnings("ALL")
     static class DRequestListener<RESOURCE> implements RequestListener<RESOURCE> {
         private final LoaderListener loaderListener;
         private final int overrideHeight;
