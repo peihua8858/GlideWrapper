@@ -2,8 +2,8 @@
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 def buildType = /*"SNAPSHOT"*/"release"
-def mavenUrl = "http://10.32.2.200:8081/repository/globalegrow/"
-def mavenUrlSnapshot = "http://10.32.2.200:8081/repository/globalegrow-snapshot/"
+def mavenUrl = "http://10.32.1.78:8081/repository/globalegrow/"
+def mavenUrlSnapshot = "http://10.32.1.78:8081/repository/globalegrow-snapshot/"
 def mavenUserName = "longxl"
 def mavenPwd = "longxl123"
 def sdkVersionName = "1.0.17"
