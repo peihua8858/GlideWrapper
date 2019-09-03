@@ -2,11 +2,11 @@
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 def buildType = /*"SNAPSHOT"*/"release"
-def mavenUrl = "http://10.32.1.78:8081/repository/globalegrow/"
-def mavenUrlSnapshot = "http://10.32.1.78:8081/repository/globalegrow-snapshot/"
+def mavenUrl = "http://10.36.5.100:8081/repository/globalegrow/"
+def mavenUrlSnapshot = "http://10.36.5.100:8081/repository/globalegrow-snapshot/"
 def mavenUserName = "longxl"
 def mavenPwd = "longxl123"
-def sdkVersionName = "1.0.17"
+def sdkVersionName = "1.0.18"
 def sdkVersionNameSnapshot = "1.0.2-SNAPSHOT"
 def pomName = "imageload"
 def pomGroupId = "com.fz.imageloader"

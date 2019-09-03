@@ -460,16 +460,7 @@ public class ImageLoader {
                 boolean asGif = isShowGif;
                 if (!TextUtils.isEmpty(url)) {
                     //判断当前url是不是gif
-                    if (!isShowGif) {
-                        int index = url.lastIndexOf(".");
-                        if (index != -1) {
-                            int lastIndex = url.indexOf("?");
-                            lastIndex = lastIndex > 0 ? lastIndex : url.length();
-                            //有点图片地址没有后缀
-                            String urlSuffix = url.substring(index, lastIndex);
-                            asGif = ".gif".equalsIgnoreCase(urlSuffix);
-                        }
-                    }
+                    asGif = asGif || url.contains(".gif");
                 }
                 if (uri != null) {
                     final RequestManager requestManager;
