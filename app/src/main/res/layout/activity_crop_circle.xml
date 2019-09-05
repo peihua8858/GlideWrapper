@@ -13,13 +13,12 @@
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/riv_image_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:riv_error="@mipmap/ic_loading_fail"
-            app:riv_height="50dp"
-            app:riv_isCropCircle="true"
+            app:riv_height="100dp"
             app:riv_placeholder="@drawable/ic_android_placehold"
-            app:riv_width="50dp" />
+            app:riv_width="100dp" />
 
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/riv_image_2"

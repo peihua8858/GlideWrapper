@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.FloatRange;
@@ -435,7 +434,6 @@ public class ImageLoader {
                         break;
                 }
             }
-            String url = "";
             if (imageView != null) {
                 if (context == null) {
                     context = imageView.getContext();
@@ -444,7 +442,7 @@ public class ImageLoader {
                 if (imageUrl instanceof Integer) {
                     uri = UriUtil.getResourceUri(context, (Integer) imageUrl);
                 } else if (imageUrl instanceof String) {
-                    url = (String) imageUrl;
+                    String url = (String) imageUrl;
                     if (url.startsWith("http")) {
                         uri = Uri.parse(url);
                     } else {
@@ -452,15 +450,9 @@ public class ImageLoader {
                     }
                 } else if (imageUrl instanceof File) {
                     File imageFile = ((File) imageUrl);
-                    url = imageFile.getAbsolutePath();
                     uri = Uri.fromFile(imageFile);
                 } else if (imageUrl instanceof Uri) {
                     uri = (Uri) imageUrl;
-                }
-                boolean asGif = isShowGif;
-                if (!TextUtils.isEmpty(url)) {
-                    //判断当前url是不是gif
-                    asGif = asGif || url.contains(".gif");
                 }
                 if (uri != null) {
                     final RequestManager requestManager;
@@ -476,12 +468,12 @@ public class ImageLoader {
                         requestManager = Glide.with(imageView);
                     }
                     RequestBuilder requestBuilder;
-                    if (asGif) {
+                    if (isShowGif) {
                         requestBuilder = requestManager.asGif();
                     } else if (resourceType != null) {
                         requestBuilder = requestManager.as(resourceType);
                     } else {
-                        requestBuilder = requestManager.asBitmap();
+                        requestBuilder = requestManager.load(uri);
                     }
                     if (requestListener != null) {
                         requestBuilder.listener(requestListener);
@@ -491,7 +483,7 @@ public class ImageLoader {
                     if (!Utils.checkOptions(options)) {
                         options.override(Target.SIZE_ORIGINAL);
                     }
-                    requestBuilder.apply(options).load(uri)
+                    requestBuilder.apply(options)
                             .into(imageView);
                 }
             }
@@ -505,7 +497,6 @@ public class ImageLoader {
      * @version 1.0
      * @date 2019/1/2 17:35
      */
-    @SuppressWarnings("ALL")
     static class DRequestListener<RESOURCE> implements RequestListener<RESOURCE> {
         private final LoaderListener loaderListener;
         private final int overrideHeight;
