@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.FloatRange;
@@ -42,7 +43,7 @@ import java.io.File;
  * @date 2016/7/15
  * @since 1.0
  */
-public class ImageLoader {
+public final class ImageLoader {
 
     public static Builder createBuilder() {
         return new Builder();
@@ -467,23 +468,28 @@ public class ImageLoader {
                     } else {
                         requestManager = Glide.with(imageView);
                     }
+                    if (!Utils.checkOptions(options)) {
+                        options.override(Target.SIZE_ORIGINAL);
+                    }
                     RequestBuilder requestBuilder;
+                    String url = uri.getPath();
+                    if (!TextUtils.isEmpty(url)) {
+                        //判断当前url是不是gif
+                        isShowGif = isShowGif || url.toLowerCase().contains(".gif");
+                    }
                     if (isShowGif) {
                         requestBuilder = requestManager.asGif();
                     } else if (resourceType != null) {
                         requestBuilder = requestManager.as(resourceType);
                     } else {
-                        requestBuilder = requestManager.load(uri);
+                        requestBuilder = requestManager.asDrawable();
                     }
                     if (requestListener != null) {
                         requestBuilder.listener(requestListener);
                     } else if (loaderListener != null) {
                         requestBuilder.listener(new DRequestListener<>(loaderListener, overrideWidth, overrideHeight));
                     }
-                    if (!Utils.checkOptions(options)) {
-                        options.override(Target.SIZE_ORIGINAL);
-                    }
-                    requestBuilder.apply(options)
+                    requestBuilder.load(uri).apply(options)
                             .into(imageView);
                 }
             }

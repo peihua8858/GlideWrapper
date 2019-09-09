@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
             app:riv_height="90dp"
+            app:riv_scaleType="centerCrop"
+            android:scaleType="centerCrop"
             app:riv_isCropCircle="true"
             app:riv_placeholder="@drawable/ic_android_placehold"
             app:riv_width="90dp" />

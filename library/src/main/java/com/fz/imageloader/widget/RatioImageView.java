@@ -361,8 +361,23 @@ public class RatioImageView extends AppCompatImageView {
      * @version 1.0
      */
     public void setImageUrl(Object url, boolean isShowGif) {
+        setImageUrl(url, isShowGif, 0, 0);
+    }
+
+    /**
+     * 统一资源标志符加载图片,如果传入的宽和高大于0，则自动压缩图片以适应传入的宽和高
+     *
+     * @param uri       需要加载图片的统一资源标志符
+     * @param isShowGif 是否加载GIF,加载gif 图片
+     * @param width     图片压缩的宽度
+     * @param height    图片压缩的高度
+     * @author dingpeihua
+     * @date 2017/7/4 15:07
+     * @version 1.0
+     */
+    public void setImageUrl(Object uri, boolean isShowGif, int width, int height) {
         setShowGif(isShowGif);
-        setImageUrl(url, 0, 0);
+        setImageUrl(uri, width, height);
     }
 
     /**
