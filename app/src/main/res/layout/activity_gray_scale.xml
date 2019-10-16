@@ -23,7 +23,7 @@
             app:riv_placeholder="@drawable/ic_android_placehold"
             app:riv_width="90dp" />
 
-        <com.fz.imageloader.widget.RatioImageView
+        <com.fz.imageloader.widget.RoundImageView
             android:id="@+id/riv_image_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
             app:riv_placeholder="@drawable/ic_android_placehold"
-            app:riv_roundedMargin="3dp"
             app:riv_grayScale="true"
             app:riv_roundedRadius="15dp" />
     </LinearLayout>

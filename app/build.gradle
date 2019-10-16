@@ -21,8 +21,8 @@ android {
 dependencies {
     implementation project(":library")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    annotationProcessor 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    annotationProcessor 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
     annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
@@ -33,8 +33,8 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
 
     // HTTP请求库
-    implementation "com.squareup.okhttp3:okhttp:3.12.1"
+    implementation "com.squareup.okhttp3:okhttp:3.12.3"
     implementation "com.github.franmontiel:PersistentCookieJar:v1.0.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:3.12.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.3"
     implementation "com.squareup.okio:okio:1.17.2"
 }
