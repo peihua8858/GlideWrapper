@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fz.imageloader.glide.LoaderListener;
-import com.fz.imageloader.utils.ImageUtils;
 import com.fz.imageloader.widget.RatioImageView;
 import com.globalegrow.glideview.Constants;
 import com.globalegrow.glideview.R;
@@ -38,7 +37,7 @@ public class GrayScaleActivity extends AppCompatActivity {
             @Override
             public boolean onSuccess(BitmapDrawable bitmapDrawable, int width, int height) {
                 Bitmap bitmap = bitmapDrawable.getBitmap();
-                bitmap = ImageUtils.toRoundCorner(bitmap, width, height, 40, ImageUtils.CORNER_TOP_LEFT|ImageUtils.CORNER_TOP_RIGHT);
+//                bitmap = ImageUtils.toRoundCorner(bitmap, width, height, 40, ImageUtils.CORNER_TOP_LEFT|ImageUtils.CORNER_TOP_RIGHT);
                 imageView3.setImageDrawable(new BitmapDrawable(getResources(), bitmap));
                 return true;
             }

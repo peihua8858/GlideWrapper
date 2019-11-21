@@ -1,5 +1,11 @@
 package com.fz.imageloader.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
+
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
@@ -70,5 +76,50 @@ public final class Utils {
 
     public static boolean isDimensionValid(int size) {
         return size > 0 || size == Target.SIZE_ORIGINAL;
+    }
+
+    /**
+     * 查找当前上下文activity
+     *
+     * @param context
+     * @author dingpeihua
+     * @date 2019/11/19 15:38
+     * @version 1.0
+     */
+    public static Activity findActivity(@NonNull Context context) {
+        if (context instanceof Activity) {
+            if (!((Activity) context).isFinishing()) {
+                return (Activity) context;
+            }
+        } else if (context instanceof ContextWrapper) {
+            return findActivity(((ContextWrapper) context).getBaseContext());
+        }
+        return null;
+    }
+
+    /**
+     * 判断activity是否销毁
+     *
+     * @param context
+     * @author dingpeihua
+     * @date 2019/11/19 15:39
+     * @version 1.0
+     */
+    public static boolean isDestroy(Context context) {
+        Activity activity = findActivity(context);
+        return activity == null || (activity.isDestroyed() || activity.isFinishing());
+    }
+
+    /**
+     * 判断activity是否关闭
+     *
+     * @param context
+     * @author dingpeihua
+     * @date 2019/11/19 15:39
+     * @version 1.0
+     */
+    public static boolean isFinish(Context context) {
+        Activity activity = findActivity(context);
+        return activity == null || activity.isFinishing();
     }
 }

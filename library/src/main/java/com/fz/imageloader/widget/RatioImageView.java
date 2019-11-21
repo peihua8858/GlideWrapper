@@ -1,6 +1,6 @@
 package com.fz.imageloader.widget;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -28,6 +28,7 @@ import com.fz.imageloader.glide.ImageLoader;
 import com.fz.imageloader.glide.LoaderListener;
 import com.fz.imageloader.glide.MatrixTransformation;
 import com.fz.imageloader.glide.RoundedCornersTransformation;
+import com.fz.imageloader.utils.Utils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -121,10 +122,6 @@ public class RatioImageView extends AppCompatImageView {
      * 宽度和高度
      */
     private int width, height;
-    /**
-     * {@link RequestOptions#sizeMultiplier(float)}
-     */
-    private float sizeMultiplier = 0f;
     /**
      * 是否是圆形
      */
@@ -237,6 +234,13 @@ public class RatioImageView extends AppCompatImageView {
             this.scaleType = scaleType;
             setImageUrl(mUri, mOptions);
         }
+    }
+
+    private RequestOptions checkOptions() {
+        if (mOptions == null) {
+            mOptions = new RequestOptions();
+        }
+        return mOptions;
     }
 
     public void setReverseDirection(@Direction int reverseDirection) {
@@ -394,13 +398,7 @@ public class RatioImageView extends AppCompatImageView {
         if (uri == null) {
             return;
         }
-        RequestOptions options = new RequestOptions();
-        if (width != 0 && height != 0) {
-            options.apply(RequestOptions.overrideOf(width, height));
-        } else if (sizeMultiplier != 0) {
-            options.sizeMultiplier(sizeMultiplier);
-        }
-        setImageUrl(uri, options);
+        setImageUrl(uri, checkOptions().override(width, height));
     }
 
     /**
@@ -415,7 +413,7 @@ public class RatioImageView extends AppCompatImageView {
      */
     public void setImageUrl(Object url, int maxWidth, float ratio) {
         final int newHeight = (int) Math.ceil((float) maxWidth * ratio);
-        setImageUrl(url, maxWidth, newHeight);
+        setImageUrl(url, checkOptions().override(maxWidth, newHeight));
     }
 
     /**
@@ -431,8 +429,7 @@ public class RatioImageView extends AppCompatImageView {
         if (uri == null) {
             return;
         }
-        this.sizeMultiplier = sizeMultiplier;
-        setImageUrl(uri, null);
+        setImageUrl(uri, checkOptions().sizeMultiplier(sizeMultiplier));
     }
 
     /**
@@ -444,11 +441,12 @@ public class RatioImageView extends AppCompatImageView {
      * @date 2017/7/4 15:07
      * @version 1.0
      */
+    @SuppressLint("CheckResult")
     public void setImageUrl(Object uri, RequestOptions options) {
         if (uri == null) {
             return;
         }
-        if (!checkContext()) {
+        if (Utils.isDestroy(getContext())) {
             return;
         }
         ImageLoader.Builder builder = ImageLoader.createBuilder();
@@ -470,10 +468,8 @@ public class RatioImageView extends AppCompatImageView {
         if (cornerType != null) {
             builder.cornerType(cornerType);
         }
-        if (sizeMultiplier != 0) {
-            builder.sizeMultiplier(sizeMultiplier);
-        } else if (width != 0 && height != 0) {
-            builder.override(width, height);
+        if (width != 0 && height != 0) {
+            options.override(width, height);
         }
         if (reverseDirection > 0) {
             float values[] = null;
@@ -501,7 +497,6 @@ public class RatioImageView extends AppCompatImageView {
             builder.transforms(new MatrixTransformation(matrixValues));
         }
         this.mUri = uri;
-        this.mOptions = options;
         builder.apply(options)
                 .showGif(isShowGif)
                 .useAnimationPool(useAnimationPool)
@@ -549,20 +544,6 @@ public class RatioImageView extends AppCompatImageView {
         }
     }
 
-    /**
-     * 检查Context是否可以加载图片，避免出现"You cannot start a load for a destroyed activity"崩溃
-     * {@link com.bumptech.glide.manager.RequestManagerRetriever#assertNotDestroyed(Activity)}
-     *
-     * @return context是否可以加载图片
-     */
-    private boolean checkContext() {
-        if (getContext() instanceof Activity) {
-            final Activity activity = (Activity) getContext();
-            return !activity.isDestroyed() && !activity.isFinishing();
-        }
-        return true;
-    }
-
     public void setPlaceholderDrawable(Drawable placeholderDrawable) {
         this.placeholderDrawable = placeholderDrawable;
     }
@@ -605,10 +586,6 @@ public class RatioImageView extends AppCompatImageView {
 
     public void setUseAnimationPool(boolean useAnimationPool) {
         this.useAnimationPool = useAnimationPool;
-    }
-
-    public void setSizeMultiplier(float sizeMultiplier) {
-        this.sizeMultiplier = sizeMultiplier;
     }
 
     public void setCropCircle(boolean cropCircle) {

@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import com.fz.imageloader.widget.RatioImageView;
-import com.globalegrow.glideview.R;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.fz.imageloader.widget.RatioImageView;
+import com.globalegrow.glideview.CustomDraweeView;
+import com.globalegrow.glideview.R;
 
 /**
  * 灰度变换
@@ -42,9 +43,13 @@ public class GifActivity extends AppCompatActivity {
         newHeight = screenWidth / (500 / 300);
         imageView3.setImageUrl(urls[2],screenWidth, newHeight);
         RatioImageView imageView4 = findViewById(R.id.riv_image_4);
-        imageView4.setImageUrl(urls[3]);
+        imageView4.setImageUrl(R.mipmap.free_stock_photo,screenWidth, newHeight);
         RatioImageView imageView5 = findViewById(R.id.riv_image_5);
-        imageView5.setImageUrl(urls[4]);
+//        imageView5.setImageUrl(urls[4]);
+        imageView5.setImageUrl("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?yyyyy=w375_2x",screenWidth, newHeight);
+        CustomDraweeView imageView6= findViewById(R.id.riv_image_6);
+//        imageView6.setImage(urls[2],screenWidth, newHeight);
+        imageView6.setImage("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?im_scale=w375_2x",screenWidth, newHeight);
     }
 
     /**

@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/riv_image_1"
             android:layout_width="wrap_content"
@@ -30,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
+            android:scaleType="centerCrop"
             app:riv_grayScale="true"
             app:riv_placeholder="@drawable/ic_android_placehold" />
 
@@ -49,5 +49,9 @@
             app:riv_roundedMargin="3dp"
             app:riv_grayScale="true"
             app:riv_roundedRadius="15dp" />
+        <com.globalegrow.glideview.CustomDraweeView
+            android:id="@+id/riv_image_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

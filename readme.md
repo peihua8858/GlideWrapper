@@ -120,7 +120,7 @@ ivBirthdayTips.setImageUrl(R.drawable.ic_birthday,true);//第一个参数图片�
 
 ```py
  repositories {
-        maven { url 'http://10.32.1.78:8081/repository/maven-public/' }
+        maven { url 'http://10.36.5.100:8081/repository/maven-public/' }
     }
 ```
 
@@ -128,7 +128,7 @@ ivBirthdayTips.setImageUrl(R.drawable.ic_birthday,true);//第一个参数图片�
 
 ```py
 dependencies {
-    implementation 'com.fz.imageloader:imageloader:1.0.17'
+    implementation 'com.fz.imageloader:imageloader:1.1.0'
 }
 ```
 

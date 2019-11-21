@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.FloatRange;
@@ -29,8 +29,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.fz.imageloader.utils.UriUtil;
-import com.fz.imageloader.utils.Utils;
 
 import java.io.File;
 
@@ -152,12 +150,6 @@ public final class ImageLoader {
         public Builder(Fragment fragment) {
             this.fragment = fragment;
             this.context = fragment.getContext();
-        }
-
-        public Builder(FragmentActivity fragmentActivity) {
-            this.fragmentActivity = fragmentActivity;
-            this.activity = fragmentActivity;
-            this.context = fragmentActivity;
         }
 
         public Builder load(@NonNull Object val) {
@@ -356,8 +348,8 @@ public final class ImageLoader {
                 options.autoClone();
             }
             if (overrideHeight > 0 || overrideWidth > 0) {
-                options = options.apply(RequestOptions.overrideOf(overrideWidth > 0 ? overrideWidth : overrideHeight,
-                        overrideHeight > 0 ? overrideHeight : overrideWidth));
+                options.override(overrideWidth > 0 ? overrideWidth : overrideHeight,
+                        overrideHeight > 0 ? overrideHeight : overrideWidth);
             }
             if (sizeMultiplier > 0) {
                 options = options.sizeMultiplier(sizeMultiplier);
@@ -435,65 +427,69 @@ public final class ImageLoader {
                         break;
                 }
             }
-            if (imageView != null) {
+            if (imageView != null && imageUrl != null) {
                 if (context == null) {
                     context = imageView.getContext();
                 }
-                Uri uri = null;
+                final RequestManager requestManager;
+                if (fragment != null) {
+                    requestManager = Glide.with(fragment);
+                } else if (activity != null) {
+                    requestManager = Glide.with(activity);
+                } else if (context != null) {
+                    requestManager = Glide.with(context);
+                } else {
+                    requestManager = Glide.with(imageView);
+                }
+                RequestBuilder requestBuilder;
+                if (isShowGif) {
+                    requestBuilder = requestManager.asGif();
+                } else if (resourceType != null) {
+                    requestBuilder = requestManager.as(resourceType).load(imageUrl);
+                } else {
+                    requestBuilder = requestManager.asDrawable();
+                }
                 if (imageUrl instanceof Integer) {
-                    uri = UriUtil.getResourceUri(context, (Integer) imageUrl);
+                    int resourceId = (int) imageUrl;
+                    requestBuilder = requestBuilder.load(resourceId);
+                    requestBuilder.apply(options);
                 } else if (imageUrl instanceof String) {
                     String url = (String) imageUrl;
                     if (url.startsWith("http")) {
-                        uri = Uri.parse(url);
+                        requestBuilder = requestBuilder.load(url);
+                        requestBuilder.apply(options);
                     } else {
-                        uri = Uri.fromFile(new File(url));
+                        requestBuilder = requestBuilder.load(new File(url));
+                        requestBuilder.apply(getFileOptions(options));
                     }
                 } else if (imageUrl instanceof File) {
-                    File imageFile = ((File) imageUrl);
-                    uri = Uri.fromFile(imageFile);
-                } else if (imageUrl instanceof Uri) {
-                    uri = (Uri) imageUrl;
+                    requestBuilder = requestBuilder.load((File) imageUrl);
+                    requestBuilder.apply(getFileOptions(options));
+                } else {
+                    requestBuilder = requestBuilder.load(imageUrl);
+                    requestBuilder.apply(options);
                 }
-                if (uri != null) {
-                    final RequestManager requestManager;
-                    if (fragment != null) {
-                        requestManager = Glide.with(fragment);
-                    } else if (fragmentActivity != null) {
-                        requestManager = Glide.with(fragmentActivity);
-                    } else if (activity != null) {
-                        requestManager = Glide.with(activity);
-                    } else if (context != null) {
-                        requestManager = Glide.with(context);
-                    } else {
-                        requestManager = Glide.with(imageView);
-                    }
-                    if (!Utils.checkOptions(options)) {
-                        options.override(Target.SIZE_ORIGINAL);
-                    }
-                    RequestBuilder requestBuilder;
-                    String url = uri.getPath();
-                    if (!TextUtils.isEmpty(url)) {
-                        //判断当前url是不是gif
-                        isShowGif = isShowGif || url.toLowerCase().contains(".gif");
-                    }
-                    if (isShowGif) {
-                        requestBuilder = requestManager.asGif();
-                    } else if (resourceType != null) {
-                        requestBuilder = requestManager.as(resourceType);
-                    } else {
-                        requestBuilder = requestManager.asDrawable();
-                    }
-                    if (requestListener != null) {
-                        requestBuilder.listener(requestListener);
-                    } else if (loaderListener != null) {
-                        requestBuilder.listener(new DRequestListener<>(loaderListener, overrideWidth, overrideHeight));
-                    }
-                    requestBuilder.load(uri).apply(options)
-                            .into(imageView);
+                if (requestListener != null) {
+                    requestBuilder.listener(requestListener);
+                } else if (loaderListener != null) {
+                    requestBuilder.listener(new DRequestListener<>(imageView, loaderListener, overrideWidth, overrideHeight));
                 }
+                requestBuilder.into(imageView);
             }
         }
+    }
+
+    /**
+     * 本地图片不用使用缓存，因为有的本地图片路径写死的不会变化，
+     * 使用缓存就展示一直不变，而此时图片实际data可能变了
+     *
+     * @param options
+     * @return
+     */
+    static RequestOptions getFileOptions(RequestOptions options) {
+        return new RequestOptions().apply(options)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
     }
 
     /**
@@ -507,11 +503,13 @@ public final class ImageLoader {
         private final LoaderListener loaderListener;
         private final int overrideHeight;
         private final int overrideWidth;
+        private final ImageView imageView;
 
-        public DRequestListener(LoaderListener loaderListener, int overrideWidth, int overrideHeight) {
+        public DRequestListener(ImageView imageView, LoaderListener loaderListener, int overrideWidth, int overrideHeight) {
             this.loaderListener = loaderListener;
             this.overrideWidth = overrideWidth;
             this.overrideHeight = overrideHeight;
+            this.imageView = imageView;
         }
 
         @Override
@@ -536,9 +534,42 @@ public final class ImageLoader {
                     width = drawable.getWidth();
                     height = drawable.getHeight();
                 }
+                if (overrideWidth > 0) {
+                    setSizeByWidthAuto(imageView, width, height, overrideWidth);
+                } else if (overrideHeight > 0) {
+                    setSizeByHeightAuto(imageView, width, height, overrideHeight);
+                }
                 return loaderListener.onSuccess(resource, width, height);
             }
             return false;
         }
+    }
+
+    /**
+     * 等比缩放到maxWidth宽度
+     *
+     * @param width
+     * @param height
+     * @param maxWidth
+     */
+    private static void setSizeByWidthAuto(View view, float width, float height, float maxWidth) {
+        if (maxWidth == 0 || height == 0 || width == 0 || view == null) return;
+        final ViewGroup.LayoutParams lp = view.getLayoutParams();
+        lp.width = (int) maxWidth;
+        lp.height = Math.round(maxWidth * height / width);
+    }
+
+    /**
+     * 等比缩放到maxHeight高度
+     *
+     * @param width
+     * @param height
+     * @param maxHeight
+     */
+    private static void setSizeByHeightAuto(View view, float width, float height, float maxHeight) {
+        if (maxHeight == 0 || height == 0 || width == 0 || view == null) return;
+        final ViewGroup.LayoutParams lp = view.getLayoutParams();
+        lp.height = (int) maxHeight;
+        lp.width = Math.round(maxHeight * width / height);
     }
 }
