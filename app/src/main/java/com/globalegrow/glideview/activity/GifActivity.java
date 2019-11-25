@@ -45,8 +45,8 @@ public class GifActivity extends AppCompatActivity {
         RatioImageView imageView4 = findViewById(R.id.riv_image_4);
         imageView4.setImageUrl(R.mipmap.free_stock_photo,screenWidth, newHeight);
         RatioImageView imageView5 = findViewById(R.id.riv_image_5);
-//        imageView5.setImageUrl(urls[4]);
-        imageView5.setImageUrl("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?yyyyy=w375_2x",screenWidth, newHeight);
+        imageView5.setImageUrl(" https://uidesign.zafcdn.com/ZF/image/2019/20191029_13493/M-750-386-fr.jpg");
+//        imageView5.setImageUrl("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?yyyyy=w375_2x",screenWidth, newHeight);
         CustomDraweeView imageView6= findViewById(R.id.riv_image_6);
 //        imageView6.setImage(urls[2],screenWidth, newHeight);
         imageView6.setImage("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?im_scale=w375_2x",screenWidth, newHeight);

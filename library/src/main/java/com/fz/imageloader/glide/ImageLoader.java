@@ -445,7 +445,7 @@ public final class ImageLoader {
                 if (isShowGif) {
                     requestBuilder = requestManager.asGif();
                 } else if (resourceType != null) {
-                    requestBuilder = requestManager.as(resourceType).load(imageUrl);
+                    requestBuilder = requestManager.as(resourceType);
                 } else {
                     requestBuilder = requestManager.asDrawable();
                 }
@@ -455,6 +455,7 @@ public final class ImageLoader {
                     requestBuilder.apply(options);
                 } else if (imageUrl instanceof String) {
                     String url = (String) imageUrl;
+                    url = url.trim();
                     if (url.startsWith("http")) {
                         requestBuilder = requestBuilder.load(url);
                         requestBuilder.apply(options);
