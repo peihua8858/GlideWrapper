@@ -12,9 +12,12 @@
         android:orientation="vertical">
         <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/riv_image_1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
+            android:scaleType="fitCenter"
+            app:riv_scaleType="centerInside"
+            app:riv_grayScale="true"
             app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
@@ -22,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:riv_error="@mipmap/ic_loading_fail"
+            app:riv_grayScale="true"
+            app:riv_isBlur="true"
             app:riv_placeholder="@drawable/ic_android_placehold" />
 
         <com.fz.imageloader.widget.RatioImageView
@@ -49,7 +54,7 @@
             app:riv_roundedMargin="3dp"
             app:riv_grayScale="true"
             app:riv_roundedRadius="15dp" />
-        <com.globalegrow.glideview.CustomDraweeView
+        <com.fz.imageloader.widget.RatioImageView
             android:id="@+id/riv_image_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

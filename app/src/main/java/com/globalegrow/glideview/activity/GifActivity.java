@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fz.imageloader.widget.RatioImageView;
-import com.globalegrow.glideview.CustomDraweeView;
 import com.globalegrow.glideview.R;
 
 /**
@@ -35,21 +34,29 @@ public class GifActivity extends AppCompatActivity {
         RatioImageView imageView1 = findViewById(R.id.riv_image_1);
         int screenWidth = getScreenWidth();
         int newHeight = screenWidth / (500 / 208);
-        imageView1.setImageUrl(urls[0],screenWidth, newHeight);
+//        Transformation<Bitmap> circleCrop = new CircleCrop();
+//        GlideApp.with(this)
+//                .load("https://uidesign.zafcdn.com/ZF/image/189/BANNER_01.gif")
+//                .optionalTransform(circleCrop)
+//                .optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(circleCrop))
+//                .into(imageView1);
+        imageView1.setImageUrl("https://uidesign.zafcdn.com/ZF/image/189/BANNER_01.gif",screenWidth,newHeight);
+//        Glide.with(this).asGif()
+//                .apply(new RequestOptions().override(screenWidth,newHeight)).load("https://uidesign.zafcdn.com/ZF/image/189/BANNER_01.gif").into(imageView1);
         RatioImageView imageView2 = findViewById(R.id.riv_image_2);
         newHeight = screenWidth / (500 / 253);
-        imageView2.setImageUrl(urls[1],screenWidth, newHeight);
+        imageView2.setImageUrl(urls[1], screenWidth, newHeight);
         RatioImageView imageView3 = findViewById(R.id.riv_image_3);
         newHeight = screenWidth / (500 / 300);
-        imageView3.setImageUrl(urls[2],screenWidth, newHeight);
+//        imageView3.setImageUrl(urls[2], screenWidth, newHeight);
         RatioImageView imageView4 = findViewById(R.id.riv_image_4);
-        imageView4.setImageUrl(R.mipmap.free_stock_photo,screenWidth, newHeight);
+//        imageView4.setImageUrl(R.mipmap.free_stock_photo, screenWidth, newHeight);
         RatioImageView imageView5 = findViewById(R.id.riv_image_5);
-        imageView5.setImageUrl(" https://uidesign.zafcdn.com/ZF/image/2019/20191029_13493/M-750-386-fr.jpg");
+//        imageView5.setImageUrl(" https://uidesign.zafcdn.com/ZF/image/2019/20191029_13493/M-750-386-fr.jpg");
 //        imageView5.setImageUrl("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?yyyyy=w375_2x",screenWidth, newHeight);
-        CustomDraweeView imageView6= findViewById(R.id.riv_image_6);
+        RatioImageView imageView6 = findViewById(R.id.riv_image_6);
 //        imageView6.setImage(urls[2],screenWidth, newHeight);
-        imageView6.setImage("https://uidesign.zafcdn.com/ZF/image/2019/20191106_13705/M_10am.gif?im_scale=w375_2x",screenWidth, newHeight);
+//        imageView6.setImageUrl("https://uidesign.zafcdn.com/ZF/image/189/BANNER_01.gif", screenWidth, newHeight);
     }
 
     /**

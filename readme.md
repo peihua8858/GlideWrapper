@@ -1,6 +1,7 @@
 ## Android 基于glide封装图片加载工具。
 
-基于 [Glide 4.9.0](https://github.com/bumptech/glide)，[Glide 中文文档](https://muyangmin.github.io/glide-docs-cn/)
+基于
+[Glide 4.10.0](https://github.com/bumptech/glide)，[Glide 中文文档](https://muyangmin.github.io/glide-docs-cn/)
 
 ## 使用Imageloader
 
@@ -128,7 +129,13 @@ ivBirthdayTips.setImageUrl(R.drawable.ic_birthday,true);//第一个参数图片�
 
 ```py
 dependencies {
-    implementation 'com.fz.imageloader:imageloader:1.1.0'
+    implementation 'com.fz.imageloader:imageloader:1.2.0'
+    implementation ("com.github.bumptech.glide:glide:4.10.0"){
+        //com.squareup.okhttp3:okhttp
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp' //by both name and group
+    }
+    // webpdecoder
+    implementation "com.zlc.glide:webpdecoder:1.6.4.10.0"
 }
 ```
 

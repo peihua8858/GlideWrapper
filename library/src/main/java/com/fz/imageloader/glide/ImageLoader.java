@@ -20,12 +20,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.integration.webp.decoder.WebpDrawable;
+import com.bumptech.glide.integration.webp.decoder.WebpDrawableTransformation;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Key;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
@@ -68,7 +73,6 @@ public final class ImageLoader {
         private Fragment fragment;
         private Activity activity;
         private ImageView imageView;
-        private FragmentActivity fragmentActivity;
         private float sizeMultiplier;
         private DiskCacheStrategy diskCacheStrategy;
         private Priority priority;
@@ -403,30 +407,27 @@ public final class ImageLoader {
             if (rotateDegree > 0) {
                 multiTransformation.addTransform(new RotateTransformation(rotateDegree));
             }
-            if (!multiTransformation.isEmpty()) {
-                options.transform(multiTransformation);
-            }
-            options.useUnlimitedSourceGeneratorsPool(useUnlimitedSourceGeneratorsPool);
-            options.onlyRetrieveFromCache(onlyRetrieveFromCache);
             options.useAnimationPool(useAnimationPool);
             if (scaleType != null) {
                 switch (scaleType) {
                     case CENTER_INSIDE:
-                        options.centerInside();
+                        multiTransformation.addTransform(new CenterInside());
                         break;
                     case FIT_CENTER:
-                        options.fitCenter();
+                        multiTransformation.addTransform(new FitCenter());
                         break;
                     case CENTER_CROP:
-                        options.centerCrop();
+                        multiTransformation.addTransform(new CenterCrop());
                         break;
                     case CIRCLE_CROP:
-                        options.circleCrop();
+                        multiTransformation.addTransform(new CircleCrop());
                         break;
                     default:
                         break;
                 }
             }
+            options.optionalTransform(multiTransformation);
+            options.optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(multiTransformation));
             if (imageView != null && imageUrl != null) {
                 if (context == null) {
                     context = imageView.getContext();
