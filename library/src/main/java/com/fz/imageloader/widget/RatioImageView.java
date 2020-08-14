@@ -20,6 +20,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.fz.imageloader.R;
@@ -164,6 +165,10 @@ public class RatioImageView extends AppCompatImageView {
      * 矩阵变化
      */
     private float[] matrixValues;
+    /**
+     * 缓存策略
+     */
+    private DiskCacheStrategy diskCacheStrategy;
 
     public RatioImageView(Context context) {
         this(context, null);
@@ -503,6 +508,7 @@ public class RatioImageView extends AppCompatImageView {
                 .placeholder(placeholderDrawable)
                 .error(errorDrawable)
                 .scaleType(scaleType)
+                .diskCacheStrategy(diskCacheStrategy)
                 .rotateDegree(rotateDegree)
                 .load(uri)
                 .listener(listener)
@@ -622,6 +628,10 @@ public class RatioImageView extends AppCompatImageView {
 
     public void setShowGif(boolean showGif) {
         isShowGif = showGif;
+    }
+
+    public void setDiskCacheStrategy(DiskCacheStrategy diskCacheStrategy) {
+        this.diskCacheStrategy = diskCacheStrategy;
     }
 }
 

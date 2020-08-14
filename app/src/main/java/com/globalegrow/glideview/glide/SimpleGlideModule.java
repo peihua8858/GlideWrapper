@@ -3,22 +3,26 @@ package com.globalegrow.glideview.glide;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.Registry;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.ImageHeaderParser;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
+import com.fz.imageloader.glide.ExifInterfaceImageHeaderParser;
 import com.globalegrow.glideview.BuildConfig;
 
 import java.io.InputStream;
-
-import androidx.annotation.NonNull;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 所以你知道要创建一个额外的类去定制 Glide。
@@ -62,5 +66,16 @@ public class SimpleGlideModule extends AppGlideModule {
     public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
         // 配置使用OKHttp来请求网络
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
+        List<ImageHeaderParser> imageHeaderParsers = registry.getImageHeaderParsers();
+//        android.media.ExifInterface.readByteOrder(ExifInterface.java:3121)
+//        Invalid image: ExifInterface got an unsupported image format file(ExifInterface supports JPEG and some RAW image formats only)
+//         or a corrupted JPEG file to ExifInterface.
+        for (Iterator<ImageHeaderParser> iterator = imageHeaderParsers.iterator(); iterator.hasNext(); ) {
+            ImageHeaderParser parser = iterator.next();
+            if (parser instanceof com.bumptech.glide.load.resource.bitmap.ExifInterfaceImageHeaderParser) {
+                iterator.remove();
+            }
+        }
+        registry.register(new ExifInterfaceImageHeaderParser());
     }
 }

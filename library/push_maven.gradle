@@ -2,12 +2,12 @@
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 def buildType = /*"SNAPSHOT"*/"release"
-def mavenUrl = "http://10.36.5.100:8081/repository/globalegrow/"
-def mavenUrlSnapshot = "http://10.36.5.100:8081/repository/globalegrow-snapshot/"
+def mavenUrl = "http://10.32.5.200:8989/repository/globalegrow/"
+def mavenUrlSnapshot = "http://10.32.5.200:8989/repository/globalegrow-snapshot/"
 def mavenUserName = "longxl"
 def mavenPwd = "longxl123"
-def sdkVersionName = "1.2.0"
-def sdkVersionNameSnapshot = "1.0.7-SNAPSHOT"
+def sdkVersionName = "1.2.1"
+def sdkVersionNameSnapshot = "1.2.1.4-SNAPSHOT"
 def pomName = "imageload"
 def pomGroupId = "com.fz.imageloader"
 def pomArtifactId = "imageloader"
@@ -15,7 +15,7 @@ def pomPackaging = "aar"
 task androidJavadocs(type: Javadoc) {
     options.encoding = "utf-8"
     source = android.sourceSets.main.java.srcDirs
-    //    failOnError false
+    failOnError false
     //添加cl
     // asspath，解析类型
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
