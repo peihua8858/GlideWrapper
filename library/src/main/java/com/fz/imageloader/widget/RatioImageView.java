@@ -16,6 +16,7 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
@@ -74,13 +75,13 @@ public class RatioImageView extends AppCompatImageView {
     @interface Direction {
     }
 
-    private static final GlideScaleType[] sScaleTypeArray = {
+    private static final GlideScaleType[] S_SCALE_TYPE_ARRAY = {
             GlideScaleType.FIT_CENTER,
             GlideScaleType.CENTER_INSIDE,
             GlideScaleType.CENTER_CROP,
             GlideScaleType.CIRCLE_CROP
     };
-    private static final int[] sReverseDirection = {
+    private static final int[] S_REVERSE_DIRECTION = {
             REVERSE_VERTICAL, REVERSE_HORIZONTAL, REVERSE_LOCALE
     };
     /**
@@ -200,10 +201,10 @@ public class RatioImageView extends AppCompatImageView {
         isShowGif = a.getBoolean(R.styleable.RatioImageView_riv_isShowGif, false);
         final int reverseIndex = a.getInt(R.styleable.RatioImageView_riv_reverseDirection, -1);
         if (index >= 0) {
-            setScaleType(sScaleTypeArray[index]);
+            setScaleType(S_SCALE_TYPE_ARRAY[index]);
         }
         if (reverseIndex >= 1) {
-            setReverseDirection(sReverseDirection[reverseIndex - 1]);
+            setReverseDirection(S_REVERSE_DIRECTION[reverseIndex - 1]);
         }
         placeholderDrawable = getDrawable(context, a.getResourceId(R.styleable.RatioImageView_riv_placeholder, -1));
         errorDrawable = getDrawable(context, a.getResourceId(R.styleable.RatioImageView_riv_error, -1));
@@ -477,7 +478,7 @@ public class RatioImageView extends AppCompatImageView {
             options.override(width, height);
         }
         if (reverseDirection > 0) {
-            float values[] = null;
+            float[] values = null;
             switch (reverseDirection) {
                 case REVERSE_VERTICAL:
                     //垂直反转
@@ -559,11 +560,11 @@ public class RatioImageView extends AppCompatImageView {
     }
 
     public void setPlaceholderDrawable(@DrawableRes int placeholderResId) {
-        this.placeholderDrawable = getContext().getResources().getDrawable(placeholderResId);
+        this.placeholderDrawable = ContextCompat.getDrawable(getContext(),placeholderResId);
     }
 
     public void setErrorDrawable(@DrawableRes int errorResId) {
-        this.errorDrawable = getContext().getResources().getDrawable(errorResId);
+        this.errorDrawable = ContextCompat.getDrawable(getContext(),errorResId);
     }
 
     public void setRoundedRadius(int roundedRadius) {
