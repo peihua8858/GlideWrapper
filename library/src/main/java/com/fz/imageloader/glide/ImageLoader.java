@@ -26,7 +26,6 @@ import com.bumptech.glide.integration.webp.decoder.WebpDrawable;
 import com.bumptech.glide.integration.webp.decoder.WebpDrawableTransformation;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.Key;
-import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.Transformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -39,8 +38,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 使用Glide加载并显示图片
@@ -102,7 +99,7 @@ public final class ImageLoader {
         private LoaderListener<?> loaderListener;
         private RequestListener<?> requestListener;
         private RoundedCornersTransformation.CornerType cornerType;
-        private MultiTransformation multiTransformation;
+        private MultiTransformation multiTransformation = new MultiTransformation<>();
         /**
          * 图片地址 包括网络地址、本地文件地址、资源id等
          */
@@ -197,7 +194,7 @@ public final class ImageLoader {
         }
 
         public <T> Builder transforms(@NonNull Transformation<T>... transformations) {
-            multiTransformation = new MultiTransformation(transformations);
+            multiTransformation.addTransforms(transformations);
             return this;
         }
 
@@ -397,49 +394,42 @@ public final class ImageLoader {
             if (theme != null) {
                 options.theme(theme);
             }
-            List<Transformation> transformations = new ArrayList<>();
             if (isCropCircle) {
-                transformations.add(new CircleCrop());
+                multiTransformation.addTransform(new CircleCrop());
             }
             if (roundedRadius > 0) {
-                transformations.add(new RoundedCornersTransformation(roundedRadius, roundedMargin, cornerType));
+                multiTransformation.addTransform(new RoundedCornersTransformation(roundedRadius, roundedMargin, cornerType));
             }
             if (isGrayScale) {
-                transformations.add(new GrayScaleTransformation());
+                multiTransformation.addTransform(new GrayScaleTransformation());
             }
             if (isBlur) {
-                transformations.add(new BlurTransformation(fuzzyRadius, sampling));
+                multiTransformation.addTransform(new BlurTransformation(fuzzyRadius, sampling));
             }
             if (rotateDegree > 0) {
-                transformations.add(new RotateTransformation(rotateDegree));
+                multiTransformation.addTransform(new RotateTransformation(rotateDegree));
             }
             options.useAnimationPool(useAnimationPool);
             if (scaleType != null) {
                 switch (scaleType) {
                     case CENTER_INSIDE:
-                        transformations.add(new CenterInside());
+                        multiTransformation.addTransform(new CenterInside());
                         break;
                     case FIT_CENTER:
-                        transformations.add(new FitCenter());
+                        multiTransformation.addTransform(new FitCenter());
                         break;
                     case CENTER_CROP:
-                        transformations.add(new CenterCrop());
+                        multiTransformation.addTransform(new CenterCrop());
                         break;
                     case CIRCLE_CROP:
-                        transformations.add(new CircleCrop());
+                        multiTransformation.addTransform(new CircleCrop());
                         break;
                     default:
                         break;
                 }
             }
-            if (multiTransformation == null && !transformations.isEmpty()) {
-                multiTransformation = new MultiTransformation(transformations);
-            } else if (multiTransformation != null) {
-//                options.optionalTransform(multiTransformation);
-                options.optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(multiTransformation));
-            } else {
-                options.optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(new CenterCrop()));
-            }
+//            options.optionalTransform(multiTransformation);
+            options.optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(multiTransformation));
             final RequestManager requestManager;
             if (fragment != null) {
                 requestManager = Glide.with(fragment);
