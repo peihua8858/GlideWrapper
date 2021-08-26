@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/peihua8858/GlideWrapper.svg)](https://jitpack.io/#peihua8858/GlideWrapper)
 ## Android 基于glide封装图片加载工具。
 
 基于
