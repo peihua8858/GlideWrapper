@@ -428,7 +428,7 @@ public final class ImageLoader {
                         break;
                 }
             }
-//            options.optionalTransform(multiTransformation);
+            options.optionalTransform(multiTransformation);
             options.optionalTransform(WebpDrawable.class, new WebpDrawableTransformation(multiTransformation));
             final RequestManager requestManager;
             if (fragment != null) {
